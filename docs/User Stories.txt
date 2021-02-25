@@ -1,0 +1,14 @@
+As an user I need to:
+
+- Be able to open a new topic so I can discuss a game with other users.
+- Be able to modify and delete my own topics and posts.
+- Be able to look at other user's profiles.
+- Be able to modify my own profile.
+- Be able to register, log in and recover my password in case I lose it.
+
+As an admin I need to:
+- Be able to open a new topic so I can discuss a game with other users.
+- Be able to modify and delete any user's topics and posts.
+- Be able to look at and modify any user's profiles.
+- Be able to log in and recover my password in case I lose it.
+
