@@ -1,12 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Parlay</title>
-</head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Juan Bracho">
+        <meta name="description"
+            content="Discuss with other scallywags over virtual seas, parlay your own way!">
+        <!-- Libraries -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+        integrity="sha512-xA6Hp6oezhjd6LiLZynuukm80f8BoZ3OpcEYaqKoCV3HKQDrYjDE1Gu8ocxgxoXmwmSzM4iqPvCsOkQNiu41GA==" crossorigin="anonymous" type="text/css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" type="text/css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="stylesheet" href="static/css/style.css">
+        <title>Virtual Parlay</title>
+    </head>
 <body>
+    <!-- Header -->
+    <header>
+        <!-- Top navbar -->
+        <nav class="text-shadow light-blue darken-1">
+            <div class="nav-wrapper">
+                <a href="#" class="left valign-wrapper"><img class="logo" src="static/images/logo.png" alt="Jolly Roger logo">Virtual Parlay</a>
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="#">All Topics</a></li>
+                    {% if session.user %}
+                        <li><a href="#">Profile</a></li>
+                        <li><a href="#">New Task</a></li>
+                        <li><a href="#">Log Out</a></li>
+                    {% else %}
+                        <li><a href="#">Log In</a></li>
+                        <li><a href="#">Register</a></li>
+                    {% endif %}
+                </ul>
+                <form class="right">
+                    <div class="input-field">
+                        <input id="search" type="search" required>
+                        <label class="label-icon" for="search"><i class="fa fa-search"></i></label>
+                    </div>
+                </form>
+            </div>
+        </nav>
+        <!-- Mobile sidenav -->
+        <ul class="sidenav" id="mobile-demo">
+            <li><h4 class="center-align light-blue-text text-darken-4">Virtual Parlay</h4></li>
+            <li><a href="#">All Topics</a></li>
+            {% if session.user %}
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">New Task</a></li>
+                <li><a href="#">Log Out</a></li>
+            {% else %}
+                <li><a href="#">Log In</a></li>
+                <li><a href="#">Register</a></li>
+            {% endif %}
+        </ul>
+    </header>
+
     {% block content %}
     {% endblock %}
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="static/js/script.js"></script>
 </body>
 </html>
