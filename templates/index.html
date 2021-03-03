@@ -1,4 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Test</h1>
+    <h2 class="center-align">All Topics</h2>
+    <div class="container">
+        <div class="row">
+            <button>New Topic</button>
+        </div>
+        <div class="row topic">
+            <a class="col s6" href="#">Title</a>
+            <a class="col s2" href="#">Author</a>
+            <span class="col s2"><i class="fa fa-comments" aria-hidden="true"></i>15</span>
+            <span class="col s2">13 Feb</span>
+        </div>
+        <div class="row topic">
+            <a class="col s6" href="#">Title</a>
+            <a class="col s2" href="#">Author</a>
+            <span class="col s2"><i class="fa fa-comments" aria-hidden="true"></i>27</span>
+            <span class="col s2">11 Feb</span>
+        </div>
+    </div>
 {% endblock %}

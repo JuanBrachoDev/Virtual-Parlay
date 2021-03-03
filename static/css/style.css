@@ -1,3 +1,9 @@
+/* ----------------- Base ----------------- */
+
+header {
+    margin-bottom: 20px;
+}
+
 .logo {
     height: 40px;
     width: 40px;
@@ -10,4 +16,13 @@
 
 #search {
     width: 0px;
+}
+
+
+/* ----------------- Index  ----------------- */
+
+.topic {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border: 2px double black;
 }
