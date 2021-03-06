@@ -77,3 +77,14 @@ header {
 .post p{
     font-size: 14px;
 }
+
+/* ----------------- Profile  ----------------- */
+
+.profile-picture{
+    height: 250px;
+    width: 250px;
+}
+
+.profile-info{
+    font-size: 20px;
+}
