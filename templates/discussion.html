@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="center-align">Title</h3>
+<div class="container">
+    <!-- Post Title and Description -->
+    <div class="row discussion-topic">
+        <p class="col s12 center-align">Description: Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
+            printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five
+            centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was
+            popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more
+            recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+    </div>
+    <!-- Posts -->
+    <div class="row posts-section">
+        <!-- Other Posts -->
+        <div class="row post">
+            <div class="col s1 user-portrait">
+                <a href="#!">
+                    <i class="fa fa-user center-align" aria-hidden="true"></i> 
+                </a>
+            </div>
+            <div class="col s11 speech-bubble chat-left">
+                <p>Post: Lorem Ipsum is simply dummy text of the printing and typesetting
+                    industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            </div>
+        </div>
+        <!-- Own Posts -->
+        <div class="row post own-post">
+            <div class="col s11 speech-bubble chat-right post">
+                <div class="hide">
+                    <!-- Edit/Delete Button -->
+                    <a class="dropdown-trigger post-options-button" href="#" data-target="post-options">
+                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                    </a>
+                    <!-- Edit/Delete Dropdown -->
+                    <ul id="post-options" class="dropdown-content">
+                        <li><a href="#!">Edit</a></li>
+                        <li><a href="#!">Delete</a></li>
+                    </ul>
+                </div>
+            
+                <p>Post: Lorem Ipsum is simply dummy text of the printing and typesetting
+                    industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            </div>
+            <div class="col s1 user-portrait">
+                <a href="#!">
+                    <i class="fa fa-user center-align" aria-hidden="true"></i> 
+                </a>
+            </div>
+        </div>        
+    </div>
+</div>
+{% endblock %}

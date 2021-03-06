@@ -26,3 +26,54 @@ header {
     padding-bottom: 20px;
     border: 2px double black;
 }
+
+/* ----------------- Discussion  ----------------- */
+
+.discussion-topic {
+    border: 2px double black;
+}
+
+.user-portrait{
+    font-size: 49px;
+}
+
+/* .speech-bubble, .chat-right:before and .chat-left:before were taken from codingislove.com */
+.speech-bubble {
+    border-radius: 15px;
+    background: #00bfb6;
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+    font-family: arial;
+    position: relative;
+}
+
+.chat-right:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 15px solid #00bfb6;
+    border-right: 15px solid transparent;
+    border-top: 15px solid #00bfb6;
+    border-bottom: 15px solid transparent;
+    right: -16px;
+    top: 0px;
+}
+
+.chat-left:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 15px solid transparent;
+    border-right: 15px solid #00bfb6;
+    border-top: 15px solid #00bfb6;
+    border-bottom: 15px solid transparent;
+    left: -16px;
+    top: 0px;
+}
+
+.post p{
+    font-size: 14px;
+}
