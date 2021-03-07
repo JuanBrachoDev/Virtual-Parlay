@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="center-align">User's Profile</h3>
+<div class="container">
+    <!-- Profile Picture -->
+    <form>
+        <div class="center-align">
+            <img class="profile-picture" src="static/images/logo.png" alt="asd">
+        </div>
+        <!-- Profile Info -->
+        <div class="row">
+            <ul class="profile-info center-align">
+                <li>Username: <input type="text" placeholder="Username"></li>
+                <li>Password: <input type="password"></li>
+                <li>Confirm Password: <input type="password"></li>
+            </ul>
+        </div>
+        <!-- Edit Profile Button -->
+        <div class="row">
+            <div class="center-align">
+                <a class="btn" href="{{ url_for('profile') }}">Cancel</a>
+                <button class="btn" type="submit">Confirm</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
