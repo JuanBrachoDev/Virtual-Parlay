@@ -18,6 +18,7 @@ mongo = PyMongo(app)
 
 
 @app.route("/")
+@app.route("/index")
 def index():
     topics = list(mongo.db.topics.find())
     return render_template("index.html", topics=topics)
@@ -38,8 +39,36 @@ def edit_profile():
     return render_template("edit_profile.html")
 
 
-@app.route("/register")
+@app.route("/register", methods=["GET", "POST"])
 def register():
+    if request.method == "POST":
+        # Check if username already exists in db
+        existing_user = mongo.db.users.find_one(
+            {"email": request.form.get("email").lower()})
+
+        if existing_user:
+            flash("Account already exists")
+            return redirect(url_for("register"))
+
+        register = {
+            "rank": "user",
+            "display_name": request.form.get("display_name").lower(),
+            "email": request.form.get("email").lower(),
+            "password": generate_password_hash(request.form.get("password")),
+            "profile_picture": "default.jpg",
+            "posts": "0",
+            "password_status": "set",
+        }
+        mongo.db.users.insert_one(register)
+
+        # Put the new user into 'session' cookie
+        session["display_name"] = request.form.get("display_name").lower()
+        session["email"] = request.form.get("email").lower()
+        flash("Registration Successful!")
+        return redirect(url_for(
+            "profile",
+            display_name=session["display_name"],
+            email=session["email"]))
     return render_template("register.html")
 
 
