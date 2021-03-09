@@ -29,9 +29,14 @@ def discussion():
     return render_template("discussion.html")
 
 
-@app.route("/profile")
-def profile():
-    return render_template("profile.html")
+@app.route("/profile/<user_id>")
+def profile(user_id):
+
+    if session["user_id"]:
+        return render_template(
+            "profile.html", user_id=user_id, display_name=session['display_name'])
+
+    return redirect(url_for("login"))
 
 
 @app.route("/edit_profile")
@@ -52,7 +57,7 @@ def register():
 
         register = {
             "rank": "user",
-            "display_name": request.form.get("display_name").lower(),
+            "display_name": request.form.get("display_name"),
             "email": request.form.get("email").lower(),
             "password": generate_password_hash(request.form.get("password")),
             "profile_picture": "default.jpg",
@@ -62,13 +67,15 @@ def register():
         mongo.db.users.insert_one(register)
 
         # Put the new user into 'session' cookie
-        session["display_name"] = request.form.get("display_name").lower()
-        session["email"] = request.form.get("email").lower()
+        session["display_name"] = register['display_name']
+        user_id = mongo.db.users.find_one(
+        {"email": register["email"]})["_id"]
         flash("Registration Successful!")
+        session[user_id] = user_id
         return redirect(url_for(
             "profile",
             display_name=session["display_name"],
-            email=session["email"]))
+            user_id=user_id))
     return render_template("register.html")
 
 
@@ -84,13 +91,13 @@ def login():
             if check_password_hash(
                 existing_user["password"],
                 request.form.get("password")):
-                session["email"] = request.form.get("email").lower()
                 session["display_name"] = existing_user["display_name"]
+                session["user_id"] = "6045c44dcec3f0b35eda85ee"
                 flash("Welcome, {}".format(existing_user["display_name"]))
                 return redirect(url_for(
                     "profile",
                     display_name=session["display_name"],
-                    email=session["email"]))
+                    user_id=session["user_id"]))
             else:
                 # Invalid passwords match
                 flash("Incorrect Email and/or Password")
@@ -107,8 +114,8 @@ def login():
 @app.route("/logout")
 def logout():
     flash("You have been logged out.")
-    session.pop("email")
     session.pop("display_name")
+    session.pop("user_id")
     return redirect(url_for("login"))
 
 

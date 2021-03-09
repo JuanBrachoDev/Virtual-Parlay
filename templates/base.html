@@ -24,8 +24,8 @@
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{{ url_for('index') }}">All Topics</a></li>
-                    {% if session.email %}
-                        <li><a href="{{ url_for('profile') }}">Profile</a></li>
+                    {% if session.user_id %}
+                        <li><a href="{{ url_for('profile', user_id=session['user_id']) }}">Profile</a></li>
                         <li><a href="#">New Task</a></li>
                         <li><a href="{{ url_for('logout') }}">Log Out</a></li>
                     {% else %}
@@ -46,8 +46,8 @@
         <ul class="sidenav" id="mobile-demo">
             <li><h4 class="center-align light-blue-text text-darken-4">Virtual Parlay</h4></li>
             <li><a href="{{ url_for('index') }}">All Topics</a></li>
-            {% if session.email %}
-                <li><a href="{{ url_for('profile') }}">Profile</a></li>
+            {% if session.user_id %}
+                <li><a href="{{ url_for('profile', user_id=session['user_id']) }}">Profile</a></li>
                 <li><a href="#">New Task</a></li>
                 <li><a href="{{ url_for('logout') }}">Log Out</a></li>
             {% else %}
