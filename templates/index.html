@@ -7,17 +7,19 @@
             <button>New Topic</button>
         </div>
         <!-- Topics -->
-        <div class="row topic">
-            <a class="col s6" href="{{ url_for('discussion') }}">Title</a>
-            <a class="col s2" href="#">Author</a>
-            <span class="col s2"><i class="fa fa-comments" aria-hidden="true"></i>15</span>
-            <span class="col s2">13 Feb</span>
-        </div>
-        <div class="row topic">
-            <a class="col s6" href="#">Title</a>
-            <a class="col s2" href="#">Author</a>
-            <span class="col s2"><i class="fa fa-comments" aria-hidden="true"></i>27</span>
-            <span class="col s2">11 Feb</span>
-        </div>
+        {% for topic in topics %}
+            <div class="row topic">
+                <a class="col s6" href="{{ url_for('discussion') }}">{{ topic.title }}</a>
+                <a class="col s2" href="{{ url_for('profile', user_id=topic.author) }}">Author</a>
+                <span class="col s2"><i class="fa fa-comments" aria-hidden="true"></i>15</span>
+                <span class="col s2">13 Feb</span>
+            </div>
+            <div class="row topic">
+                <a class="col s6" href="#">Title</a>
+                <a class="col s2" href="#">Author</a>
+                <span class="col s2"><i class="fa fa-comments" aria-hidden="true"></i>27</span>
+                <span class="col s2">11 Feb</span>
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}

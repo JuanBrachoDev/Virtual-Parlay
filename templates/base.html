@@ -11,7 +11,7 @@
         integrity="sha512-xA6Hp6oezhjd6LiLZynuukm80f8BoZ3OpcEYaqKoCV3HKQDrYjDE1Gu8ocxgxoXmwmSzM4iqPvCsOkQNiu41GA==" crossorigin="anonymous" type="text/css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" type="text/css">
         <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link rel="stylesheet" href="static/css/style.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
         <title>Virtual Parlay</title>
     </head>
 <body>
@@ -20,12 +20,12 @@
         <!-- Top navbar -->
         <nav class="text-shadow light-blue darken-1">
             <div class="nav-wrapper">
-                <a href="#" class="left valign-wrapper"><img class="logo" src="static/images/logo.png" alt="Jolly Roger logo">Virtual Parlay</a>
+                <a href="#" class="left valign-wrapper"><img class="logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="Jolly Roger logo">Virtual Parlay</a>
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{{ url_for('index') }}">All Topics</a></li>
                     {% if session.user_id %}
-                        <li><a href="{{ url_for('profile', user_id=session['user_id']) }}">Profile</a></li>
+                        <li><a href="{{ url_for('profile', user_id=session['user_id'], display_name=session['display_name']) }}">Profile</a></li>
                         <li><a href="#">New Task</a></li>
                         <li><a href="{{ url_for('logout') }}">Log Out</a></li>
                     {% else %}
@@ -47,7 +47,7 @@
             <li><h4 class="center-align light-blue-text text-darken-4">Virtual Parlay</h4></li>
             <li><a href="{{ url_for('index') }}">All Topics</a></li>
             {% if session.user_id %}
-                <li><a href="{{ url_for('profile', user_id=session['user_id']) }}">Profile</a></li>
+                <li><a href="{{ url_for('profile', user_id=session['user_id'], display_name=session['display_name']) }}">Profile</a></li>
                 <li><a href="#">New Task</a></li>
                 <li><a href="{{ url_for('logout') }}">Log Out</a></li>
             {% else %}
@@ -78,6 +78,6 @@
             crossorigin="anonymous"></script>
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="static/js/script.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
