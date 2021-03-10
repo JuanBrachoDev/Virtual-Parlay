@@ -38,9 +38,29 @@ def profile(user_id):
     return render_template("profile.html", user=user)
 
 
-@app.route("/edit_profile")
-def edit_profile():
-    return render_template("edit_profile.html")
+@app.route("/edit_profile/<user_id>", methods=["GET", "POST"])
+def edit_profile(user_id):
+
+    user = mongo.db.users.find_one(
+            {"_id": ObjectId(user_id)})
+
+    if request.method == "POST":
+        submit = {
+            "rank": "user",
+            "display_name": request.form.get("display_name"),
+            "email": user['email'],
+            "password": user['password'],
+            "profile_picture": request.form.get("profile_picture"),
+            "posts": user['posts'],
+            "password_status": "set"
+        }
+        mongo.db.users.update({"_id": ObjectId(user_id)}, submit)
+        flash("Profile Successfully Updated")
+
+    if user_id == session['user_id']:
+        return render_template("edit_profile.html", user=user)
+    
+    return redirect(url_for("index"))
 
 
 @app.route("/register", methods=["GET", "POST"])

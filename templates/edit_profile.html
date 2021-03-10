@@ -3,23 +3,23 @@
 <h3 class="center-align">User's Profile</h3>
 <div class="container">
     <!-- Edit Profile form -->
-    <form>
-        <!-- Profile picture -->
-        <div class="center-align">
-            <img class="profile-picture" src="static/images/logo.png" alt="asd">
-        </div>
-        <!-- Profile info -->
-        <div class="row">
-            <ul class="profile-info center-align">
-                <li>Display Name: <input type="text" placeholder="Display Name"></li>
-                <li>Password: <input type="password"></li>
-                <li>Confirm Password: <input type="password"></li>
-            </ul>
+    <form method="POST" action="{{ url_for('edit_profile', user_id=session['user_id']) }}">
+        <div class="card-panel">
+            <div class="row">
+                <div class="col s12 center-align input-field">
+                    <input id="display_name" name="display_name" type="text" minlength="5" maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" value="{{ user.display_name }}" class="validate" required>
+                    <label for="display_name">Display Name</label>
+                </div>
+                <div class="col s12 bottom input-field">
+                    <input id="profile_picture" name="profile_picture" type="file" size="50000000" accept="image/png, image/jpeg" required>
+                    <label class="active" for="profile_picture">Profile Picture</label>
+                </div>
+            </div> 
         </div>
         <!-- Edit Profile button -->
         <div class="row">
             <div class="center-align">
-                <a class="btn" href="{{ url_for('profile') }}">Cancel</a>
+                <a class="btn" href="{{ url_for('profile', user_id=session['user_id']) }}">Cancel</a>
                 <button class="btn" type="submit">Confirm</button>
             </div>
         </div>
