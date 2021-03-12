@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from flask import (
     Flask, flash, render_template,
      redirect, request, session, url_for)
@@ -18,9 +19,23 @@ mongo = PyMongo(app)
 
 
 @app.route("/")
-@app.route("/index")
+@app.route("/index", methods=["GET", "POST"])
 def index():
     topics = list(mongo.db.topics.find())
+
+    if request.method == "POST":
+        submit = {
+            "author": session['user_id'],
+            "author_name": session['display_name'],
+            "title": request.form.get("title"),
+            "description": request.form.get("description"),
+            "posts": "0",
+            "date": datetime.now()
+        }
+        mongo.db.topics.insert_one(submit)
+        flash("Topic Successfully Updated")
+        return redirect(url_for("index"))
+
     return render_template("index.html", topics=topics)
 
 
