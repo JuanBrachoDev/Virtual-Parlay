@@ -21,6 +21,7 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/index", methods=["GET", "POST"])
 def index():
+    
     topics = list(mongo.db.topics.find())
 
     if request.method == "POST":
@@ -39,9 +40,24 @@ def index():
     return render_template("index.html", topics=topics)
 
 
-@app.route("/discussion")
-def discussion():
-    return render_template("discussion.html")
+@app.route("/discussion/<topic>", methods=["GET", "POST"])
+def discussion(topic):
+
+    topic_info = mongo.db.topics.find_one({'_id': ObjectId(topic)})
+    posts = list(mongo.db.posts.find({'topic': topic}))
+
+    if request.method == "POST":
+        submit = {
+            "topic": topic,
+            "author": session['user_id'],
+            "date": datetime.now(),
+            "post": request.form.get("post")
+        }
+        mongo.db.posts.insert_one(submit)
+        return redirect(url_for("discussion", topic=topic))
+
+    return render_template(
+        "discussion.html", topic_info=topic_info, posts=posts)
 
 
 @app.route("/profile/<user_id>")

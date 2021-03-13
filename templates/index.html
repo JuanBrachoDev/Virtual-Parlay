@@ -7,7 +7,7 @@
             <!-- New Topic button -->
             <div class="row collapsible-header">New Topic</div>
             <!-- New Topic form -->
-            <form class="collapsible-body" method="POST" action="{{ url_for('index')}}">
+            <form class="collapsible-body" method="POST" action="{{ url_for('index') }}">
                 <div class="card-panel">
                     <div class="row">
                         <!-- Title input -->
@@ -35,7 +35,7 @@
         <!-- Topics -->
         {% for topic in topics %}
             <div class="row topic">
-                <a class="col s6" href="{{ url_for('discussion') }}">{{ topic.title }}</a>
+                <a class="col s6" href="{{ url_for('discussion', topic=topic._id) }}">{{ topic.title }}</a>
                 <a class="col s2" href="{{ url_for('profile', user_id=topic.author) }}">{{ topic.author_name }}</a>
                 <span class="col s2"><i class="fa fa-comments" aria-hidden="true"></i>{{ topic.posts }}</span>
                 <span class="col s2">{{ topic.date }}</span>
