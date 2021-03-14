@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
+    <!-- Post Title and Description -->
     <h3 class="center-align">{{ topic_info.title }}</h3>
     <div class="container">
-        <!-- Post Title and Description -->
+        <div class="row">
+            <a class="btn col s4 offset-s1 l2 offset-l3" href="#">Edit</a>
+            <a class="btn col s4 offset-s2 l2 offset-l2" href="{{ url_for('delete_topic', topic=topic_info._id) }}">Delete</a>
+        </div>
         <div class="row discussion-topic">
             <p class="col s12 center-align">{{ topic_info.description }}</p>
         </div>

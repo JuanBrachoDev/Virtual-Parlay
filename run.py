@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 from flask import (
     Flask, flash, render_template,
-     redirect, request, session, url_for)
+    redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -38,6 +38,13 @@ def index():
         return redirect(url_for("index"))
 
     return render_template("index.html", topics=topics)
+
+
+@app.route("/delete_topic/<topic>")
+def delete_topic(topic):
+    mongo.db.topics.remove({"_id": ObjectId(topic)})
+    flash("Topic has been deleted.")
+    return redirect(url_for("index"))
 
 
 @app.route("/discussion/<topic>", methods=["GET", "POST"])
@@ -110,7 +117,7 @@ def register():
             "display_name": request.form.get("display_name"),
             "email": request.form.get("email").lower(),
             "password": generate_password_hash(request.form.get("password")),
-            "profile_picture": "default.jpg",
+            "profile_picture": "default.png",
             "posts": "0",
             "password_status": "set",
         }
