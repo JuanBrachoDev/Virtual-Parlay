@@ -1,65 +1,89 @@
 {% extends "base.html" %}
 {% block content %}
-    <!-- Post Title and Description -->
-    <h3 class="center-align">{{ topic_info.title }}</h3>
-    <div class="container">
+<div class="container">
+    <!-- Topic area -->
+    <div id="topic_area" class="card-panel">
+        <!-- Post Title and Description -->
+        <h3 class="center-align">{{ topic_info.title }}</h3>
         <div class="row">
-            <a class="btn col s4 offset-s1 l2 offset-l3" href="#">Edit</a>
-            <a class="btn col s4 offset-s2 l2 offset-l2" href="{{ url_for('delete_topic', topic=topic_info._id) }}">Delete</a>
-        </div>
-        <div class="row discussion-topic">
             <p class="col s12 center-align">{{ topic_info.description }}</p>
         </div>
-        <!-- Posts -->
-        <div class="row posts-section">
-            {% for post in posts %}
-                {% if post.author == session['user_id'] %}
-                    <!-- Own posts -->
-                    <div class="row post own-post">
-                        <div class="col s11 speech-bubble chat-right post">
-                            <div class="hide">
-                                <!-- Edit/Delete button -->
-                                <a class="dropdown-trigger post-options-button" href="#" data-target="post-options">
-                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                </a>
-                                <!-- Edit/Delete dropdown -->
-                                <ul id="post-options" class="dropdown-content">
-                                    <li><a href="#!">Edit</a></li>
-                                    <li><a href="#!">Delete</a></li>
-                                </ul>
-                            </div>                  
-                            <p>{{ post.post }}</p>
-                        </div>
-                        <div class="col s1 user-portrait">
-                            <a href="#!">
-                                <i class="fa fa-user center-align" aria-hidden="true"></i> 
-                            </a>
-                        </div>
-                    </div>
-                {% else %}
-                    <!-- Other posts -->
-                    <div class="row post">
-                        <div class="col s1 user-portrait">
-                            <a href="#!">
-                                <i class="fa fa-user center-align" aria-hidden="true"></i> 
-                            </a>
-                        </div>
-                        <div class="col s11 speech-bubble chat-left">
-                            <p>{{ post.post }}</p>
-                        </div>
-                    </div>
-                {% endif %}
-            {% endfor %}        
+        <div class="row center-align">
+            <a class="btn" href="#">Edit</a>
+            <a class="btn"
+                href="{{ url_for('delete_topic', topic=topic_info._id) }}">Delete</a>
         </div>
-        <form class="row fixed-bottom" method="POST" action="{{ url_for('discussion', topic=topic_info._id) }}">
-            <div class="col s9 input-field">
-                <textarea id="post" name="post" type="text" class="materialize-textarea" required></textarea>
-                <label for="post"></label>
+    </div>
+    <!-- Edit Topic form -->
+    <div id="edit_topic_area" class="row card-panel">
+        <form method="POST" action="{{ url_for('edit_topic', topic=topic_info._id) }}">
+            <div class="col s12 center-align input-field">
+                <input id="topic_title" name="topic_title" type="text" minlength="5" maxlength="40" class="validate"
+                    value="{{ topic_info.title }}" required>
+                <label for="topic_title">Title</label>
             </div>
-            <div class="col s3">
-                <button class="btn" type="submit">Send</button>
+            <div class="col s12 input-field">
+                <textarea id="topic_description" name="topic_description" type="text" minlength="5" max="200"
+                    class="validate materialize-textarea" required>{{ topic_info.description }}</textarea>
+                <label for="topic_description">Description</label>
+            </div>
+            <div class="row">
+                <div class="center-align">
+                    <button class="btn" type="button">Cancel</button>
+                    <button class="btn" type="submit">Confirm</button>
+                </div>
             </div>
         </form>
     </div>
+    <!-- Posts -->
+    <div class="row posts-section">
+        {% for post in posts %}
+        {% if post.author == session['user_id'] %}
+        <!-- Own posts -->
+        <div class="row post own-post">
+            <div class="col s11 speech-bubble chat-right post">
+                <div class="hide">
+                    <!-- Edit/Delete button -->
+                    <a class="dropdown-trigger post-options-button" href="#" data-target="post-options">
+                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                    </a>
+                    <!-- Edit/Delete dropdown -->
+                    <ul id="post-options" class="dropdown-content">
+                        <li><a href="#!">Edit</a></li>
+                        <li><a href="#!">Delete</a></li>
+                    </ul>
+                </div>
+                <p>{{ post.post }}</p>
+            </div>
+            <div class="col s1 user-portrait">
+                <a href="#!">
+                    <i class="fa fa-user center-align" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+        {% else %}
+        <!-- Other posts -->
+        <div class="row post">
+            <div class="col s1 user-portrait">
+                <a href="#!">
+                    <i class="fa fa-user center-align" aria-hidden="true"></i>
+                </a>
+            </div>
+            <div class="col s11 speech-bubble chat-left">
+                <p>{{ post.post }}</p>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <form class="row fixed-bottom" method="POST" action="{{ url_for('discussion', topic=topic_info._id) }}">
+        <div class="col s9 input-field">
+            <textarea id="post" name="post" type="text" class="materialize-textarea" required></textarea>
+            <label for="post"></label>
+        </div>
+        <div class="col s3">
+            <button class="btn" type="submit">Send</button>
+        </div>
+    </form>
+</div>
 {% endblock %}
-

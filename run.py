@@ -40,6 +40,26 @@ def index():
     return render_template("index.html", topics=topics)
 
 
+@app.route("/edit_topic/<topic>", methods=["GET", "POST"])
+def edit_topic(topic):
+
+    topic_info = mongo.db.topics.find_one({'_id': ObjectId(topic)})
+
+    if request.method == "POST":
+        submit = {
+            "author": topic_info['author'],
+            "author_name": topic_info['author_name'],
+            "title": request.form.get("topic_title"),
+            "description": request.form.get("topic_description"),
+            "posts": topic_info['posts'],
+            "date": topic_info['date']
+        }
+        mongo.db.topics.update({"_id": ObjectId(topic)}, submit)
+        flash("Topic Successfully Updated")
+
+    return redirect(url_for("discussion", topic=topic_info['_id']))
+
+
 @app.route("/delete_topic/<topic>")
 def delete_topic(topic):
     mongo.db.topics.remove({"_id": ObjectId(topic)})
