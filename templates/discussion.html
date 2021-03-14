@@ -9,13 +9,13 @@
             <p class="col s12 center-align">{{ topic_info.description }}</p>
         </div>
         <div class="row center-align">
-            <a class="btn" href="#">Edit</a>
+            <button class="btn" onclick="showTopicEdit()" type="button">Edit</button>
             <a class="btn"
                 href="{{ url_for('delete_topic', topic=topic_info._id) }}">Delete</a>
         </div>
     </div>
     <!-- Edit Topic form -->
-    <div id="edit_topic_area" class="row card-panel">
+    <div id="edit_topic_area" class="row card-panel hide">
         <form method="POST" action="{{ url_for('edit_topic', topic=topic_info._id) }}">
             <div class="col s12 center-align input-field">
                 <input id="topic_title" name="topic_title" type="text" minlength="5" maxlength="40" class="validate"
@@ -29,7 +29,7 @@
             </div>
             <div class="row">
                 <div class="center-align">
-                    <button class="btn" type="button">Cancel</button>
+                    <button class="btn" onclick="hideTopicEdit()" type="button">Cancel</button>
                     <button class="btn" type="submit">Confirm</button>
                 </div>
             </div>
@@ -42,7 +42,7 @@
         <!-- Own posts -->
         <div class="row post own-post">
             <div class="col s11 speech-bubble chat-right post">
-                <div class="hide">
+                <div class="">
                     <!-- Edit/Delete button -->
                     <a class="dropdown-trigger post-options-button" href="#" data-target="post-options">
                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>

@@ -23,3 +23,15 @@ function checkConfirmPassword(event){
         $('#confirm_password').removeClass("valid");
     }
 }
+
+// Hides topic's area and shows edit form
+function showTopicEdit(){   
+    $('#edit_topic_area').removeClass("hide");
+    $('#topic_area').addClass("hide");
+}
+
+// Hides topic's form and shows area
+function hideTopicEdit(){   
+    $('#topic_area').removeClass("hide");
+    $('#edit_topic_area').addClass("hide");
+}
