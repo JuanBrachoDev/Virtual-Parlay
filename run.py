@@ -87,6 +87,14 @@ def discussion(topic):
         "discussion.html", topic_info=topic_info, posts=posts)
 
 
+@app.route("/delete_post/<post>")
+def delete_post(post):
+    post_info = mongo.db.posts.find_one({'_id': ObjectId(post)})
+    mongo.db.posts.remove({"_id": ObjectId(post)})
+    flash("Post has been deleted.")
+    return redirect(url_for("discussion", topic=post_info['topic']))
+
+
 @app.route("/profile/<user_id>")
 def profile(user_id):
 

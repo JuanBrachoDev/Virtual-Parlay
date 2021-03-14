@@ -50,7 +50,7 @@
                     <!-- Edit/Delete dropdown -->
                     <ul id="post-options" class="dropdown-content">
                         <li><a href="#!">Edit</a></li>
-                        <li><a href="#!">Delete</a></li>
+                        <li><a href="{{ url_for('delete_post', post=post._id) }}">Delete</a></li>
                     </ul>
                 </div>
                 <p>{{ post.post }}</p>
