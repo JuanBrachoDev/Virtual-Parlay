@@ -87,6 +87,24 @@ def discussion(topic):
         "discussion.html", topic_info=topic_info, posts=posts)
 
 
+@app.route("/edit_post/<post>", methods=["GET", "POST"])
+def edit_post(post):
+
+    post_info = mongo.db.posts.find_one({'_id': ObjectId(post)})
+
+    if request.method == "POST":
+        submit = {
+            "topic": post_info['topic'],
+            "author": post_info['author'],
+            "date": post_info['date'],
+            "post": request.form.get(f"post_edit_{post}")
+        }
+        mongo.db.posts.update({"_id": ObjectId(post)}, submit)
+        flash("Post Successfully Updated")
+
+    return redirect(url_for("discussion", topic=post_info['topic']))
+
+
 @app.route("/delete_post/<post>")
 def delete_post(post):
     post_info = mongo.db.posts.find_one({'_id': ObjectId(post)})

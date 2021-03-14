@@ -35,3 +35,15 @@ function hideTopicEdit(){
     $('#topic_area').removeClass("hide");
     $('#edit_topic_area').addClass("hide");
 }
+
+// Hides post's text and shows edit form
+function showPostEdit(button){
+    $(`#edit_post_area_${$(button).data("post")}`).removeClass("hide");
+    $(`#post_text_${$(button).data("post")}`).addClass("hide");
+}
+
+// Hides post's form and shows text
+function hidePostEdit(button){   
+    $(`#post_text_${$(button).data("post")}`).removeClass("hide");
+    $(`#edit_post_area_${$(button).data("post")}`).addClass("hide");
+}

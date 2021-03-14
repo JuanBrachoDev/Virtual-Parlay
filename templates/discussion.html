@@ -42,18 +42,30 @@
         <!-- Own posts -->
         <div class="row post own-post">
             <div class="col s11 speech-bubble chat-right post">
-                <div class="">
+                <div>
                     <!-- Edit/Delete button -->
-                    <a class="dropdown-trigger post-options-button" href="#" data-target="post-options">
+                    <a class="dropdown-trigger post-options-button" href="#" data-target="post-options_{{ post._id }}">
                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                     </a>
                     <!-- Edit/Delete dropdown -->
-                    <ul id="post-options" class="dropdown-content">
-                        <li><a href="#!">Edit</a></li>
+                    <ul id="post-options_{{ post._id }}" class="dropdown-content">
+                        <li><button class="btn" data-post="{{ post._id }}" onclick="showPostEdit(this)" type="button">Edit</button></li>
                         <li><a href="{{ url_for('delete_post', post=post._id) }}">Delete</a></li>
                     </ul>
                 </div>
-                <p>{{ post.post }}</p>
+                <!-- Post Edit form -->
+                <div id="edit_post_area_{{ post._id }}" class="hide">
+                    <form method="POST" action="{{ url_for('edit_post', post=post._id) }}">
+                        <textarea id="post_edit_{{ post._id }}" name="post_edit_{{ post._id }}" type="text" class="materialize-textarea" required>{{ post.post }}</textarea>
+                        <label for="post_edit_{{ post._id }}"></label>
+                        <div class="center-align">
+                            <button class="btn" data-post="{{ post._id }}" onclick="hidePostEdit(this)" type="button">Cancel</button>
+                            <button class="btn" type="submit">Save</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- Post text -->
+                <p id="post_text_{{ post._id }}">{{ post.post }}</p>
             </div>
             <div class="col s1 user-portrait">
                 <a href="#!">
