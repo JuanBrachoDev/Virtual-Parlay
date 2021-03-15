@@ -14,8 +14,14 @@ header {
     vertical-align: sub;
 }
 
-#search {
-    width: 0px;
+.nav-wrapper .right .input-field .search-hidden {
+    width: 0rem;
+    transition: width 0.5s;
+}
+
+.nav-wrapper .right .input-field .search-shown {
+    width: 20rem;
+    transition: width 0.5s;
 }
 
 

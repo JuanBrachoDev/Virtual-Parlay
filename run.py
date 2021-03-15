@@ -21,7 +21,7 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/index", methods=["GET", "POST"])
 def index():
-    
+
     topics = list(mongo.db.topics.find())
 
     if request.method == "POST":
@@ -117,7 +117,7 @@ def delete_post(post):
 def profile(user_id):
 
     user = mongo.db.users.find_one(
-            {"_id": ObjectId(user_id)})
+        {"_id": ObjectId(user_id)})
 
     return render_template("profile.html", user=user)
 
@@ -126,7 +126,7 @@ def profile(user_id):
 def edit_profile(user_id):
 
     user = mongo.db.users.find_one(
-            {"_id": ObjectId(user_id)})
+        {"_id": ObjectId(user_id)})
 
     if request.method == "POST":
         submit = {
@@ -143,7 +143,7 @@ def edit_profile(user_id):
 
     if user_id == session['user_id']:
         return render_template("edit_profile.html", user=user)
-    
+
     return redirect(url_for("index"))
 
 
@@ -172,7 +172,7 @@ def register():
         # Put the new user into 'session' cookie
         session['display_name'] = register['display_name']
         user_id = str(mongo.db.users.find_one(
-        {"email": register["email"]})["_id"])
+            {"email": register["email"]})["_id"])
         flash("Registration Successful!")
         session['user_id'] = user_id
         return redirect(url_for(
@@ -191,8 +191,8 @@ def login():
         if existing_user:
             # Ensure hashed password matches user input
             if check_password_hash(
-                existing_user["password"],
-                request.form.get("password")):
+                    existing_user["password"],
+                    request.form.get("password")):
                 session["display_name"] = existing_user["display_name"]
                 session["user_id"] = str(existing_user["_id"])
                 flash("Welcome, {}".format(existing_user["display_name"]))
@@ -218,6 +218,14 @@ def logout():
     session.pop("display_name")
     session.pop("user_id")
     return redirect(url_for("login"))
+
+
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    query = request.form.get("search")
+    print(query)
+    topics = list(mongo.db.topics.find({"$text": {"$search": query}}))
+    return render_template("index.html", topics=topics)
 
 
 if __name__ == "__main__":

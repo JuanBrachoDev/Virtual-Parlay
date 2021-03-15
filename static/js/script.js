@@ -47,3 +47,15 @@ function hidePostEdit(button){
     $(`#post_text_${$(button).data("post")}`).removeClass("hide");
     $(`#edit_post_area_${$(button).data("post")}`).addClass("hide");
 }
+
+// Hides post's form and shows text
+function showSearchField(searchField){   
+    $(searchField).removeClass("search-hidden");
+    $(searchField).addClass("search-shown");
+}
+
+function hideSearchField(searchField){   
+    $(searchField).removeClass("search-shown");
+    $(searchField).addClass("search-hidden");
+    $(searchField).val("");
+}
