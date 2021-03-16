@@ -14,6 +14,14 @@ header {
     vertical-align: sub;
 }
 
+/* ----------------- Index  ----------------- */
+
+.topic {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border: 2px double black;
+}
+
 .nav-wrapper .right .input-field .search-hidden {
     width: 0rem;
     transition: width 0.5s;
@@ -22,15 +30,6 @@ header {
 .nav-wrapper .right .input-field .search-shown {
     width: 20rem;
     transition: width 0.5s;
-}
-
-
-/* ----------------- Index  ----------------- */
-
-.topic {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    border: 2px double black;
 }
 
 /* ----------------- Discussion  ----------------- */

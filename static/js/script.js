@@ -1,9 +1,11 @@
+// Initializes materialize components
 $(document).ready(function(){
     $(".sidenav").sidenav({edge: "right"});
     $('.dropdown-trigger').dropdown();
     $('.collapsible').collapsible();
 });
 
+// Adds taphold events to posts
 $(function(){
   $( ".post" ).bind( "taphold", tapholdHandler);
  
@@ -11,7 +13,6 @@ $(function(){
     $( ".post-options-button" ).click();
   }
 });
-
 
 // Checks that 'confirm password' field is equal to 'password' field
 function checkConfirmPassword(event){   
@@ -48,12 +49,13 @@ function hidePostEdit(button){
     $(`#edit_post_area_${$(button).data("post")}`).addClass("hide");
 }
 
-// Hides post's form and shows text
+// Expands search field
 function showSearchField(searchField){   
     $(searchField).removeClass("search-hidden");
     $(searchField).addClass("search-shown");
 }
 
+// Shrinks search field
 function hideSearchField(searchField){   
     $(searchField).removeClass("search-shown");
     $(searchField).addClass("search-hidden");

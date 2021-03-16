@@ -6,22 +6,27 @@
     <form method="POST" action="{{ url_for('register') }}">
         <div class="card-panel">
             <div class="row">
+                <!-- Display Name -->
                 <div class="col s12 center-align input-field">
                     <input id="display_name" name="display_name" type="text" minlength="5" maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" class="validate" required>
                     <label for="display_name">Display Name</label>
                 </div>
+                <!-- Email -->
                 <div class="col s12 center-align input-field">
                     <input id="email" name="email" type="email" minlength="3" class="validate" required>
                     <label for="email">Email</label>
                 </div>
+                <!-- Password -->
                 <div class="col s12 center-align input-field">
                     <input id="password" name="password" type="password" minlength="8" maxlength="40" class="validate" onkeyup="checkConfirmPassword(this);" required>
                     <label for="password">Password (mininum 8 characters)</label>
                 </div>
+                <!-- Confirm Password -->
                 <div class="col s12 center-align input-field">
                     <input id="confirm_password" name="confirm_password" type="password" minlength="8" maxlength="40" onkeyup="checkConfirmPassword(this);" required>
                     <label for="confirm_password">Confirm Password</label>
                 </div>
+                <!-- Submit button -->
                 <div class="row center-align">
                     <button class="btn" type="submit">Register</button>
                 </div>

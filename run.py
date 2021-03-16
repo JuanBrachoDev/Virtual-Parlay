@@ -9,6 +9,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
     import env
 
+# App config
+
 app = Flask(__name__)
 
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
@@ -22,8 +24,11 @@ mongo = PyMongo(app)
 @app.route("/index", methods=["GET", "POST"])
 def index():
 
+    # Fetch topics collection from db
     topics = list(mongo.db.topics.find())
 
+    # Create new topic, flash a message confirming the
+    # insertion and reload page
     if request.method == "POST":
         submit = {
             "author": session['user_id'],
@@ -43,8 +48,10 @@ def index():
 @app.route("/edit_topic/<topic>", methods=["GET", "POST"])
 def edit_topic(topic):
 
+    # Fetch topic info from db
     topic_info = mongo.db.topics.find_one({'_id': ObjectId(topic)})
 
+    # Update topic and flash message confirming changes
     if request.method == "POST":
         submit = {
             "author": topic_info['author'],
@@ -62,6 +69,7 @@ def edit_topic(topic):
 
 @app.route("/delete_topic/<topic>")
 def delete_topic(topic):
+    # Remove topic from db and flash message confirming deletion
     mongo.db.topics.remove({"_id": ObjectId(topic)})
     flash("Topic has been deleted.")
     return redirect(url_for("index"))
@@ -70,9 +78,11 @@ def delete_topic(topic):
 @app.route("/discussion/<topic>", methods=["GET", "POST"])
 def discussion(topic):
 
+    # Fetch topic info and posts within the topic from db
     topic_info = mongo.db.topics.find_one({'_id': ObjectId(topic)})
     posts = list(mongo.db.posts.find({'topic': topic}))
 
+    # Insert new post into db
     if request.method == "POST":
         submit = {
             "topic": topic,
@@ -90,8 +100,10 @@ def discussion(topic):
 @app.route("/edit_post/<post>", methods=["GET", "POST"])
 def edit_post(post):
 
+    # Fetch post from db
     post_info = mongo.db.posts.find_one({'_id': ObjectId(post)})
 
+    # Update post and flash message confirming changes
     if request.method == "POST":
         submit = {
             "topic": post_info['topic'],
@@ -107,6 +119,7 @@ def edit_post(post):
 
 @app.route("/delete_post/<post>")
 def delete_post(post):
+    # Delete post from db and flash message confirming deletion
     post_info = mongo.db.posts.find_one({'_id': ObjectId(post)})
     mongo.db.posts.remove({"_id": ObjectId(post)})
     flash("Post has been deleted.")
@@ -115,7 +128,7 @@ def delete_post(post):
 
 @app.route("/profile/<user_id>")
 def profile(user_id):
-
+    # Fetch user from db
     user = mongo.db.users.find_one(
         {"_id": ObjectId(user_id)})
 
@@ -125,9 +138,11 @@ def profile(user_id):
 @app.route("/edit_profile/<user_id>", methods=["GET", "POST"])
 def edit_profile(user_id):
 
+    # Fetch user from db
     user = mongo.db.users.find_one(
         {"_id": ObjectId(user_id)})
 
+    # Update user and flash message confirming changes 
     if request.method == "POST":
         submit = {
             "rank": "user",
@@ -141,6 +156,8 @@ def edit_profile(user_id):
         mongo.db.users.update({"_id": ObjectId(user_id)}, submit)
         flash("Profile Successfully Updated")
 
+    # Allows user to edit own profile only if logged in, otherwise
+    # redirect to main page 
     if user_id == session['user_id']:
         return render_template("edit_profile.html", user=user)
 
@@ -150,14 +167,18 @@ def edit_profile(user_id):
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
+
         # Check if username already exists in db
         existing_user = mongo.db.users.find_one(
             {"email": request.form.get("email").lower()})
 
+        # Shows message to user confirming that account already
+        # exists and redirects to register
         if existing_user:
             flash("Account already exists")
             return redirect(url_for("register"))
 
+        # Inserts new user into db
         register = {
             "rank": "user",
             "display_name": request.form.get("display_name"),
@@ -169,7 +190,8 @@ def register():
         }
         mongo.db.users.insert_one(register)
 
-        # Put the new user into 'session' cookie
+        # Put the new user's name and _id into 'session' cookie, shows
+        # message confirming registration and redirects to profile
         session['display_name'] = register['display_name']
         user_id = str(mongo.db.users.find_one(
             {"email": register["email"]})["_id"])
@@ -184,12 +206,14 @@ def register():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
+
         # Check if usernarme exists in db
         existing_user = mongo.db.users.find_one(
             {"email": request.form.get("email").lower()})
 
         if existing_user:
-            # Ensure hashed password matches user input
+            # Ensures hashed password matches user input, sets cookies,
+            # shows message welcoming user and redirects to profile 
             if check_password_hash(
                     existing_user["password"],
                     request.form.get("password")):
@@ -214,6 +238,8 @@ def login():
 
 @app.route("/logout")
 def logout():
+    # Logs user out, shows message confirming changes and
+    # deletes cookies
     flash("You have been logged out.")
     session.pop("display_name")
     session.pop("user_id")
@@ -222,8 +248,9 @@ def logout():
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
+    # Queries the topics collection according to the value entered
+    # in the search field and loads page with the results
     query = request.form.get("search")
-    print(query)
     topics = list(mongo.db.topics.find({"$text": {"$search": query}}))
     return render_template("index.html", topics=topics)
 
