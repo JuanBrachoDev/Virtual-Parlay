@@ -1,49 +1,49 @@
 {% extends "base.html" %}
 {% block content %}
-<h2 class="center-align">All Topics</h2>
-<div class="container">
-    <ul class="collapsible">
-        <li>
-            <!-- New Topic button -->
-            <div class="collapsible-header">
-                <p>New Topic</p>
-            </div>
-            <!-- New Topic form -->
-            <form class="collapsible-body" method="POST" action="{{ url_for('index') }}">
-                <div class="card-panel">
+    <h2 class="center-align">All Topics</h2>
+    <div class="container">
+        <ul class="collapsible">
+            <li>
+                <!-- New Topic button -->
+                <div class="collapsible-header">
+                    <p>New Topic</p>
+                </div>
+                <!-- New Topic form -->
+                <form class="collapsible-body" method="POST" action="{{ url_for('index') }}">
+                    <div class="card-panel">
+                        <div class="row">
+                            <!-- Title input -->
+                            <div class="col s12 center-align input-field">
+                                <input id="title" name="title" type="text" minlength="5" maxlength="40" class="validate"
+                                    required>
+                                <label for="title">Title</label>
+                            </div>
+                            <!-- Description textarea -->
+                            <div class="col s12 bottom input-field">
+                                <textarea id="description" name="description" type="text" minlength="5" max="200"
+                                    class="validate materialize-textarea" required></textarea>
+                                <label for="description">Description</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Submit and Cancel buttons -->
                     <div class="row">
-                        <!-- Title input -->
-                        <div class="col s12 center-align input-field">
-                            <input id="title" name="title" type="text" minlength="5" maxlength="40" class="validate"
-                                required>
-                            <label for="title">Title</label>
-                        </div>
-                        <!-- Description textarea -->
-                        <div class="col s12 bottom input-field">
-                            <textarea id="description" name="description" type="text" minlength="5" max="200"
-                                class="validate materialize-textarea" required></textarea>
-                            <label for="description">Description</label>
+                        <div class="center-align">
+                            <button class="btn" type="reset">Cancel</button>
+                            <button class="btn" type="submit">Confirm</button>
                         </div>
                     </div>
-                </div>
-                <!-- Submit and Cancel buttons -->
-                <div class="row">
-                    <div class="center-align">
-                        <button class="btn" type="reset">Cancel</button>
-                        <button class="btn" type="submit">Confirm</button>
-                    </div>
-                </div>
-            </form>
-        </li>
-    </ul>
-    <!-- Topics -->
-    {% for topic in topics %}
-        <div class="row topic">
-            <a class="col s6" href="{{ url_for('discussion', topic=topic._id) }}">{{ topic.title }}</a>
-            <a class="col s2" href="{{ url_for('profile', user_id=topic.author) }}">{{ topic.author_name }}</a>
-            <span class="col s2"><i class="fa fa-comments" aria-hidden="true"></i>{{ topic.posts }}</span>
-            <span class="col s2">{{ topic.date }}</span>
-        </div>
-    {% endfor %}
-</div>
+                </form>
+            </li>
+        </ul>
+        <!-- Topics -->
+        {% for topic in topics %}
+            <div class="row topic">
+                <a class="col s6" href="{{ url_for('discussion', topic=topic._id) }}">{{ topic.title }}</a>
+                <a class="col s2" href="{{ url_for('profile', user_id=topic.author) }}">{{ topic.author_name }}</a>
+                <span class="col s2"><i class="fa fa-comments" aria-hidden="true"></i>{{ topic.posts }}</span>
+                <span class="col s2">{{ topic.date }}</span>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

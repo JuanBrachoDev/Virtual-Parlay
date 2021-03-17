@@ -8,11 +8,13 @@
             <div class="row">
                 <p class="col s12 center-align">{{ topic_info.description }}</p>
             </div>
-            <!-- Edit/Delete buttons -->
-            <div class="row center-align">
-                <button class="btn" onclick="showTopicEdit()" type="button">Edit</button>
-                <a class="btn" href="{{ url_for('delete_topic', topic=topic_info._id) }}">Delete</a>
-            </div>
+            {% if topic_info.author == session['user_id'] %}
+                <!-- Edit/Delete buttons -->
+                <div class="row center-align">
+                    <button class="btn" onclick="showTopicEdit()" type="button">Edit</button>
+                    <a class="btn" href="{{ url_for('delete_topic', topic=topic_info._id) }}">Delete</a>
+                </div>
+            {% endif %}
         </div>
         <!-- Edit Topic form -->
         <div id="edit_topic_area" class="row card-panel hide">
@@ -44,19 +46,19 @@
                 {% if post.author == session['user_id'] %}
                     <!-- Own posts -->
                     <div class="row post own-post">
-                        <div class="col s11 speech-bubble chat-right post">
-                            <div>
-                                <!-- Edit/Delete button -->
-                                <a class="dropdown-trigger post-options-button" href="#" data-target="post-options_{{ post._id }}">
-                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                </a>
-                                <!-- Edit/Delete dropdown -->
-                                <ul id="post-options_{{ post._id }}" class="dropdown-content">
-                                    <li><button class="btn" data-post="{{ post._id }}" onclick="showPostEdit(this)"
-                                            type="button">Edit</button></li>
-                                    <li><a href="{{ url_for('delete_post', post=post._id) }}">Delete</a></li>
-                                </ul>
-                            </div>
+                        <div class="col s1">
+                            <!-- Edit/Delete button -->
+                            <a class="dropdown-trigger post-options-button" href="#" data-target="post-options_{{ post._id }}">
+                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                            </a>
+                            <!-- Edit/Delete dropdown -->
+                            <ul id="post-options_{{ post._id }}" class="dropdown-content">
+                                <li><button class="btn" data-post="{{ post._id }}" onclick="showPostEdit(this)"
+                                        type="button">Edit</button></li>
+                                <li><a href="{{ url_for('delete_post', post=post._id) }}">Delete</a></li>
+                            </ul>
+                        </div>
+                        <div class="col s10 speech-bubble chat-right post">
                             <!-- Post Edit form -->
                             <div id="edit_post_area_{{ post._id }}" class="hide">
                                 <form method="POST" action="{{ url_for('edit_post', post=post._id) }}">
@@ -74,7 +76,7 @@
                             </div>
                             <!-- Post text -->
                             <p id="post_text_{{ post._id }}">{{ post.post }}</p>
-                        </div>
+                        </div>        
                         <!-- Profile picture -->
                         <div class="col s1 user-portrait">
                             <a href="{{ url_for('profile', user_id=post.author) }}">
@@ -99,13 +101,13 @@
                 {% endif %}
             {% endfor %}
         </div>
-        <!-- Post Edit form -->
+        <!-- New Post form -->
         <form class="row fixed-bottom" method="POST" action="{{ url_for('discussion', topic=topic_info._id) }}">
             <div class="col s9 input-field">
                 <textarea id="post" name="post" type="text" class="materialize-textarea" required></textarea>
                 <label for="post"></label>
             </div>
-            <div class="col s3">
+            <div class="col s3 input-field">
                 <button class="btn" type="submit">Send</button>
             </div>
         </form>
