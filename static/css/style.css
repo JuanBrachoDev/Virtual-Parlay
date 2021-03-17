@@ -1,7 +1,24 @@
+/* ----------------- Fonts ----------------- */
+
+@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Merienda&display=swap');
+
 /* ----------------- Document ----------------- */
 
 html {
     background-color: #B1F4FC;
+    color: black;
+    font-family: 'Merienda', cursive;
+}
+
+h3 {
+    font-family: 'Berkshire Swash', cursive;
+}
+
+button {
+    font-family: 'Merienda', cursive;
+}
+
+a {
     color: black;
 }
 
@@ -52,6 +69,11 @@ header {
     margin: 5px;
 }
 
+.logo-text {
+    font-family: 'Berkshire Swash', cursive;
+    font-size: large;
+}
+
 .label-icon i {
     vertical-align: sub;
 }
@@ -93,7 +115,6 @@ header {
     color: #fff;
     text-align: center;
     font-weight: 600;
-    font-family: arial;
     position: relative;
 }
 
