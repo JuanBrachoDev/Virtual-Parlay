@@ -1,7 +1,49 @@
+/* ----------------- Document ----------------- */
+
+html {
+    background-color: #B1F4FC;
+    color: black;
+}
+
+form .input-field input, form .input-field label {
+    color: black;
+}
+
+.btn {
+    background-image: url('../images/dark_wood.png');
+    background-repeat: repeat;
+    color: white;
+}
+
+.card-panel {
+    background-image: url('../images/wood_pattern.png');
+    background-repeat: repeat;
+    border: 2px outset gray;
+}
+
 /* ----------------- Base ----------------- */
 
 header {
     margin-bottom: 20px;
+}
+
+.nav-wrapper {
+    background-color: #395461;
+}
+
+.sidenav h4 {
+    color: #395461;
+}
+
+.collapsible {
+    background-image: url('../images/tex_Water.png');
+    background-repeat: repeat;
+}
+
+.collapsible-header {
+    background-image: url('../images/tex_Water.png');
+    background-repeat: repeat;
+    border-bottom: none;
 }
 
 .logo {
@@ -14,22 +56,24 @@ header {
     vertical-align: sub;
 }
 
+.nav-wrapper .right .input-field .search-hidden {
+    width: 0vw;
+    transition: width 0.5s;
+}
+
+.nav-wrapper .right .input-field .search-shown {
+    width: 30vw;
+    transition: width 0.5s;
+}
+
 /* ----------------- Index  ----------------- */
 
 .topic {
     padding-top: 20px;
     padding-bottom: 20px;
-    border: 2px double black;
-}
-
-.nav-wrapper .right .input-field .search-hidden {
-    width: 0rem;
-    transition: width 0.5s;
-}
-
-.nav-wrapper .right .input-field .search-shown {
-    width: 20rem;
-    transition: width 0.5s;
+    border: 2px outset gray;
+    background-image: url('../images/wood_pattern.png');
+    background-repeat: repeat;
 }
 
 /* ----------------- Discussion  ----------------- */
@@ -38,7 +82,7 @@ header {
     border: 2px double black;
 }
 
-.user-portrait{
+.user-portrait {
     font-size: 49px;
 }
 
@@ -79,17 +123,29 @@ header {
     top: 0px;
 }
 
-.post p{
+.post p {
     font-size: 14px;
 }
 
 /* ----------------- Profile  ----------------- */
 
-.profile-picture{
+.profile-picture {
     height: 250px;
     width: 250px;
 }
 
-.profile-info{
+.profile-info {
     font-size: 20px;
+}
+
+/* ----------------- Profile  ----------------- */
+@media screen and (max-width: 500px) {
+    .logo-text {
+        display: none;
+    }
+
+    .nav-wrapper .right .input-field .search-shown {
+    width: 40vw;
+    transition: width 0.5s;
+}
 }

@@ -142,7 +142,8 @@ def edit_profile(user_id):
     user = mongo.db.users.find_one(
         {"_id": ObjectId(user_id)})
 
-    # Update user and flash message confirming changes 
+    # Update user and flash message confirming changes, then redirects
+    # to updated profile page
     if request.method == "POST":
         submit = {
             "rank": "user",
@@ -155,9 +156,10 @@ def edit_profile(user_id):
         }
         mongo.db.users.update({"_id": ObjectId(user_id)}, submit)
         flash("Profile Successfully Updated")
+        return redirect(url_for("profile", user_id=user_id))
 
     # Allows user to edit own profile only if logged in, otherwise
-    # redirect to main page 
+    # redirect to main page
     if user_id == session['user_id']:
         return render_template("edit_profile.html", user=user)
 
@@ -213,7 +215,7 @@ def login():
 
         if existing_user:
             # Ensures hashed password matches user input, sets cookies,
-            # shows message welcoming user and redirects to profile 
+            # shows message welcoming user and redirects to profile
             if check_password_hash(
                     existing_user["password"],
                     request.form.get("password")):

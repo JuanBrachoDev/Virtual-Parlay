@@ -25,8 +25,8 @@
             <div class="nav-wrapper">
                 <!-- Logo -->
                 <a href="{{ url_for('index') }}" class="left valign-wrapper"><img class="logo"
-                        src="{{ url_for('static', filename='images/logo.png') }}" alt="Jolly Roger logo">Virtual
-                    Parlay</a>
+                        src="{{ url_for('static', filename='images/logo.png') }}" alt="Jolly Roger logo"><span class="logo-text">Virtual
+                    Parlay</span></a>
                 <!-- Mobile Trigger -->
                 <a href="#" data-target="mobile-trigger" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
                 <!-- Button Menu -->
@@ -53,7 +53,7 @@
         <!-- Mobile sidenav -->
         <ul class="sidenav" id="mobile-trigger">
             <li>
-                <h4 class="center-align light-blue-text text-darken-4">Virtual Parlay</h4>
+                <h4 class="center-align">Virtual Parlay</h4>
             </li>
             <li><a href="{{ url_for('index') }}">All Topics</a></li>
             {% if session.user_id %}
