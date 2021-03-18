@@ -39,7 +39,7 @@ def index():
             "author_name": session['display_name'],
             "title": request.form.get("title"),
             "description": request.form.get("description"),
-            "posts": "0",
+            "posts": 0,
             "date": datetime.now()
         }
         mongo.db.topics.insert_one(submit)
@@ -95,6 +95,11 @@ def discussion(topic):
             "post": request.form.get("post")
         }
         mongo.db.posts.insert_one(submit)
+        # Increase post counts for the post and the user
+        mongo.db.topics.update({"_id": ObjectId(topic)}, {
+                               "$inc": {"posts": 1}})
+        mongo.db.users.update({"_id": ObjectId(submit['author'])}, {
+                              "$inc": {"posts": 1}})
         return redirect(url_for("discussion", topic=topic))
 
     return render_template(
@@ -123,9 +128,15 @@ def edit_post(post):
 
 @app.route("/delete_post/<post>")
 def delete_post(post):
-    # Delete post from db and flash message confirming deletion
     post_info = mongo.db.posts.find_one({'_id': ObjectId(post)})
-    mongo.db.posts.remove({"_id": ObjectId(post)})
+    print(post)
+    # Decrease post counts for the post and the user
+    mongo.db.topics.update_one({"_id": ObjectId(post_info['topic'])}, {
+                               "$inc": {"posts": -1}})
+    mongo.db.users.update_one({"_id": ObjectId(post_info['author'])}, {
+                              "$inc": {"posts": -1}})
+    # Delete post from db and flash message confirming deletion
+    mongo.db.posts.delete_one({"_id": ObjectId(post)})
     flash("Post has been deleted.")
     return redirect(url_for("discussion", topic=post_info['topic']))
 
@@ -200,7 +211,7 @@ def register():
             "display_name": request.form.get("display_name"),
             "email": request.form.get("email").lower(),
             "password": generate_password_hash(request.form.get("password")),
-            "posts": "0",
+            "posts": 0,
             "password_status": "set",
         }
         mongo.db.users.insert_one(register)
