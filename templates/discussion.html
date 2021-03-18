@@ -80,7 +80,7 @@
                         <!-- Profile picture -->
                         <div class="col s1 user-portrait">
                             <a href="{{ url_for('profile', user_id=post.author) }}">
-                                <i class="fa fa-user center-align" aria-hidden="true"></i>
+                                <img class="post-profile-picture" src="{{ url_for('send_file', filename=post.author) }}" alt="Profile Picture">
                             </a>
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                         <!-- Profile picture -->
                         <div class="col s1 user-portrait">
                             <a href="{{ url_for('profile', user_id=post.author) }}">
-                                <i class="fa fa-user center-align" aria-hidden="true"></i>
+                                <img class="post-profile-picture" src="{{ url_for('send_file', filename=post.author) }}" alt="Profile Picture">
                             </a>
                         </div>
                         <!-- Post Text -->

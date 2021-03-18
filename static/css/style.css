@@ -104,10 +104,6 @@ header {
     border: 2px double black;
 }
 
-.user-portrait {
-    font-size: 49px;
-}
-
 /* .speech-bubble, .chat-right:before and .chat-left:before were taken from codingislove.com */
 .speech-bubble {
     border-radius: 15px;
@@ -148,6 +144,11 @@ header {
     font-size: 14px;
 }
 
+.post-profile-picture {
+    width: 49px;
+    height: 49px;
+}
+
 /* ----------------- Profile  ----------------- */
 
 .profile-picture {
@@ -159,7 +160,7 @@ header {
     font-size: 20px;
 }
 
-/* ----------------- Profile  ----------------- */
+/* ----------------- Media Queries  ----------------- */
 @media screen and (max-width: 500px) {
     .logo-text {
         display: none;

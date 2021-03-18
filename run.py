@@ -1,7 +1,8 @@
 import os
 from datetime import datetime
+import shutil
 from flask import (
-    Flask, flash, render_template,
+    Flask, flash, render_template, send_from_directory,
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
@@ -13,8 +14,11 @@ if os.path.exists("env.py"):
 
 app = Flask(__name__)
 
+profile_images = f'{app.root_path}/profile_images/'
+
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
+app.config['UPLOAD_FOLDER'] = profile_images
 app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
@@ -126,6 +130,12 @@ def delete_post(post):
     return redirect(url_for("discussion", topic=post_info['topic']))
 
 
+# Helper route to load images stored in profile_images
+@app.route("/send_file/<filename>")
+def send_file(filename):
+    return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
+
+
 @app.route("/profile/<user_id>")
 def profile(user_id):
     # Fetch user from db
@@ -145,16 +155,20 @@ def edit_profile(user_id):
     # Update user and flash message confirming changes, then redirects
     # to updated profile page
     if request.method == "POST":
+        # Saves image in upload folder and grabs filename to save in db
+        profile_image = request.files['profile_picture']
+        filename = session['user_id']
+        profile_image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         submit = {
             "rank": "user",
             "display_name": request.form.get("display_name"),
             "email": user['email'],
             "password": user['password'],
-            "profile_picture": request.form.get("profile_picture"),
             "posts": user['posts'],
             "password_status": "set"
         }
         mongo.db.users.update({"_id": ObjectId(user_id)}, submit)
+        session['display_name'] = submit['display_name']
         flash("Profile Successfully Updated")
         return redirect(url_for("profile", user_id=user_id))
 
@@ -186,19 +200,23 @@ def register():
             "display_name": request.form.get("display_name"),
             "email": request.form.get("email").lower(),
             "password": generate_password_hash(request.form.get("password")),
-            "profile_picture": "default.png",
             "posts": "0",
             "password_status": "set",
         }
         mongo.db.users.insert_one(register)
+        user_id = str(mongo.db.users.find_one(
+            {"email": register["email"]})["_id"])
+
+        # Create a copy of default.png and save it in profile_images
+        shutil.copyfile(f'{app.config["UPLOAD_FOLDER"]}default.png',
+                        f'{app.config["UPLOAD_FOLDER"]}{user_id}')
 
         # Put the new user's name and _id into 'session' cookie, shows
         # message confirming registration and redirects to profile
         session['display_name'] = register['display_name']
-        user_id = str(mongo.db.users.find_one(
-            {"email": register["email"]})["_id"])
-        flash("Registration Successful!")
         session['user_id'] = user_id
+        flash("Registration Successful!")
+
         return redirect(url_for(
             "profile",
             user_id=user_id))
