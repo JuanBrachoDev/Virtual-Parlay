@@ -34,6 +34,11 @@ def index():
     # Create new topic, flash a message confirming the
     # insertion and reload page
     if request.method == "POST":
+
+        # Redirects user to login if no session exists
+        if session.get('user_id') is None:
+            return redirect(url_for("login"))
+
         submit = {
             "author": session['user_id'],
             "author_name": session['display_name'],
@@ -88,6 +93,11 @@ def discussion(topic):
 
     # Insert new post into db
     if request.method == "POST":
+
+        # Redirects user to login if no session exists
+        if session.get('user_id') is None:
+            return redirect(url_for("login"))
+
         submit = {
             "topic": topic,
             "author": session['user_id'],
