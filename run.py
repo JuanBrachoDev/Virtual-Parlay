@@ -3,7 +3,7 @@ from datetime import datetime
 import shutil
 from flask import (
     Flask, flash, render_template, send_from_directory,
-    redirect, request, session, url_for)
+    redirect, request, session, url_for, Blueprint)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -11,7 +11,6 @@ if os.path.exists("env.py"):
     import env
 
 # App config
-
 app = Flask(__name__)
 
 profile_images = f'{app.root_path}/profile_images/'
@@ -21,11 +20,18 @@ app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.config['UPLOAD_FOLDER'] = profile_images
 app.secret_key = os.environ.get("SECRET_KEY")
 
+# Database
 mongo = PyMongo(app)
 
+# Blueprints
+main = Blueprint('main', __name__)
 
-@app.route("/")
-@app.route("/index", methods=["GET", "POST"])
+app.register_blueprint(main, url_prefix=('/main'))
+
+
+# Routes
+@main.route("/")
+@main.route("/index", methods=["GET", "POST"])
 def index():
 
     # Fetch topics collection from db
