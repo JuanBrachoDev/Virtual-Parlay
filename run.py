@@ -30,8 +30,8 @@ app.register_blueprint(main, url_prefix=('/main'))
 
 
 # Routes
-@main.route("/")
-@main.route("/index", methods=["GET", "POST"])
+@app.route("/")
+@app.route("/index", methods=["GET", "POST"])
 def index():
 
     # Fetch topics collection from db
