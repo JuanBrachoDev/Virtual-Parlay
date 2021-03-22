@@ -23,61 +23,62 @@ app.secret_key = os.environ.get("SECRET_KEY")
 # Database
 mongo = PyMongo(app)
 
-# Blueprints
-main = Blueprint('main', __name__)
 
-app.register_blueprint(main, url_prefix=('/main'))
+# Helper route to load images stored in profile_images
+@app.route("/send_file/<filename>")
+def send_file(filename):
+    return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
 
 
 # Routes
 @app.route("/")
-@app.route("/index", methods=["GET", "POST"])
+@app.route("/index")
 def index():
 
     # Fetch topics collection from db
     topics = list(mongo.db.topics.find())
-
-    # Create new topic, flash a message confirming the
-    # insertion and reload page
-    if request.method == "POST":
-
-        # Redirects user to login if no session exists
-        if session.get('user_id') is None:
-            return redirect(url_for("login"))
-
-        submit = {
-            "author": session['user_id'],
-            "author_name": session['display_name'],
-            "title": request.form.get("title"),
-            "description": request.form.get("description"),
-            "posts": 0,
-            "date": datetime.now()
-        }
-        mongo.db.topics.insert_one(submit)
-        flash("Topic Successfully Updated")
-        return redirect(url_for("index"))
-
     return render_template("index.html", topics=topics)
 
 
-@app.route("/edit_topic/<topic>", methods=["GET", "POST"])
+@app.route("/index_post", methods=["POST"])
+def index_post():
+
+    # Redirects user to login if no session exists
+    if session.get('user_id') is None:
+        return redirect(url_for("login"))
+
+    # Create new topic, flash a message confirming the
+    # insertion and reload page
+    submit = {
+        "author": session['user_id'],
+        "author_name": session['display_name'],
+        "title": request.form.get("title"),
+        "description": request.form.get("description"),
+        "posts": 0,
+        "date": datetime.now()
+    }
+    mongo.db.topics.insert_one(submit)
+    flash("Topic Successfully Updated")
+    return redirect(url_for("index"))
+
+
+@app.route("/edit_topic/<topic>", methods=["POST"])
 def edit_topic(topic):
 
     # Fetch topic info from db
     topic_info = mongo.db.topics.find_one({'_id': ObjectId(topic)})
 
     # Update topic and flash message confirming changes
-    if request.method == "POST":
-        submit = {
-            "author": topic_info['author'],
-            "author_name": topic_info['author_name'],
-            "title": request.form.get("topic_title"),
-            "description": request.form.get("topic_description"),
-            "posts": topic_info['posts'],
-            "date": topic_info['date']
-        }
-        mongo.db.topics.update({"_id": ObjectId(topic)}, submit)
-        flash("Topic Successfully Updated")
+    submit = {
+        "author": topic_info['author'],
+        "author_name": topic_info['author_name'],
+        "title": request.form.get("topic_title"),
+        "description": request.form.get("topic_description"),
+        "posts": topic_info['posts'],
+        "date": topic_info['date']
+    }
+    mongo.db.topics.update({"_id": ObjectId(topic)}, submit)
+    flash("Topic Successfully Updated")
 
     return redirect(url_for("discussion", topic=topic_info['_id']))
 
@@ -90,54 +91,59 @@ def delete_topic(topic):
     return redirect(url_for("index"))
 
 
-@app.route("/discussion/<topic>", methods=["GET", "POST"])
+@app.route("/discussion/<topic>")
 def discussion(topic):
 
     # Fetch topic info and posts within the topic from db
     topic_info = mongo.db.topics.find_one({'_id': ObjectId(topic)})
     posts = list(mongo.db.posts.find({'topic': topic}))
 
-    # Insert new post into db
-    if request.method == "POST":
-
-        # Redirects user to login if no session exists
-        if session.get('user_id') is None:
-            return redirect(url_for("login"))
-
-        submit = {
-            "topic": topic,
-            "author": session['user_id'],
-            "date": datetime.now(),
-            "post": request.form.get("post")
-        }
-        mongo.db.posts.insert_one(submit)
-        # Increase post counts for the post and the user
-        mongo.db.topics.update({"_id": ObjectId(topic)}, {
-                               "$inc": {"posts": 1}})
-        mongo.db.users.update({"_id": ObjectId(submit['author'])}, {
-                              "$inc": {"posts": 1}})
-        return redirect(url_for("discussion", topic=topic))
-
     return render_template(
         "discussion.html", topic_info=topic_info, posts=posts)
 
 
-@app.route("/edit_post/<post>", methods=["GET", "POST"])
+@app.route("/discussion_post/<topic>", methods=["POST"])
+def discussion_post(topic):
+
+    # Redirects user to login if no session exists
+    if session.get('user_id') is None:
+        return redirect(url_for("login"))
+
+    # Insert new post into db
+    submit = {
+        "topic": topic,
+        "author": session['user_id'],
+        "date": datetime.now(),
+        "post": request.form.get("post")
+    }
+    mongo.db.posts.insert_one(submit)
+    # Increase post counts for the post and the user
+    mongo.db.topics.update({"_id": ObjectId(topic)}, {
+                            "$inc": {"posts": 1}})
+    mongo.db.users.update({"_id": ObjectId(submit['author'])}, {
+                            "$inc": {"posts": 1}})
+    return redirect(url_for("discussion", topic=topic))
+
+
+@app.route("/edit_post/<post>", methods=["POST"])
 def edit_post(post):
+
+    # Redirects user to login if no session exists
+    if session.get('user_id') is None:
+        return redirect(url_for("login"))
 
     # Fetch post from db
     post_info = mongo.db.posts.find_one({'_id': ObjectId(post)})
 
     # Update post and flash message confirming changes
-    if request.method == "POST":
-        submit = {
-            "topic": post_info['topic'],
-            "author": post_info['author'],
-            "date": post_info['date'],
-            "post": request.form.get(f"post_edit_{post}")
-        }
-        mongo.db.posts.update({"_id": ObjectId(post)}, submit)
-        flash("Post Successfully Updated")
+    submit = {
+        "topic": post_info['topic'],
+        "author": post_info['author'],
+        "date": post_info['date'],
+        "post": request.form.get(f"post_edit_{post}")
+    }
+    mongo.db.posts.update({"_id": ObjectId(post)}, submit)
+    flash("Post Successfully Updated")
 
     return redirect(url_for("discussion", topic=post_info['topic']))
 
@@ -157,12 +163,6 @@ def delete_post(post):
     return redirect(url_for("discussion", topic=post_info['topic']))
 
 
-# Helper route to load images stored in profile_images
-@app.route("/send_file/<filename>")
-def send_file(filename):
-    return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
-
-
 @app.route("/profile/<user_id>")
 def profile(user_id):
     # Fetch user from db
@@ -172,32 +172,12 @@ def profile(user_id):
     return render_template("profile.html", user=user)
 
 
-@app.route("/edit_profile/<user_id>", methods=["GET", "POST"])
+@app.route("/edit_profile/<user_id>", methods=["GET"])
 def edit_profile(user_id):
 
     # Fetch user from db
     user = mongo.db.users.find_one(
         {"_id": ObjectId(user_id)})
-
-    # Update user and flash message confirming changes, then redirects
-    # to updated profile page
-    if request.method == "POST":
-        # Saves image in upload folder and grabs filename to save in db
-        profile_image = request.files['profile_picture']
-        filename = session['user_id']
-        profile_image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        submit = {
-            "rank": "user",
-            "display_name": request.form.get("display_name"),
-            "email": user['email'],
-            "password": user['password'],
-            "posts": user['posts'],
-            "password_status": "set"
-        }
-        mongo.db.users.update({"_id": ObjectId(user_id)}, submit)
-        session['display_name'] = submit['display_name']
-        flash("Profile Successfully Updated")
-        return redirect(url_for("profile", user_id=user_id))
 
     # Allows user to edit own profile only if logged in, otherwise
     # redirect to main page
@@ -207,80 +187,111 @@ def edit_profile(user_id):
     return redirect(url_for("index"))
 
 
-@app.route("/register", methods=["GET", "POST"])
+@app.route("/edit_profile_post/<user_id>", methods=["POST"])
+def edit_profile_post(user_id):
+
+    # Fetch user from db
+    user = mongo.db.users.find_one(
+        {"_id": ObjectId(user_id)})
+
+    # Saves image in upload folder and grabs filename to save in db
+    profile_image = request.files['profile_picture']
+    filename = session['user_id']
+    profile_image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+    # Update user and flash message confirming changes, then redirects
+    # to updated profile page
+    submit = {
+        "rank": "user",
+        "display_name": request.form.get("display_name"),
+        "email": user['email'],
+        "password": user['password'],
+        "posts": user['posts'],
+        "password_status": "set"
+    }
+    mongo.db.users.update({"_id": ObjectId(user_id)}, submit)
+    session['display_name'] = submit['display_name']
+    flash("Profile Successfully Updated")
+    return redirect(url_for("profile", user_id=user_id))
+
+
+@app.route("/register")
 def register():
-    if request.method == "POST":
-
-        # Check if username already exists in db
-        existing_user = mongo.db.users.find_one(
-            {"email": request.form.get("email").lower()})
-
-        # Shows message to user confirming that account already
-        # exists and redirects to register
-        if existing_user:
-            flash("Account already exists")
-            return redirect(url_for("register"))
-
-        # Inserts new user into db
-        register = {
-            "rank": "user",
-            "display_name": request.form.get("display_name"),
-            "email": request.form.get("email").lower(),
-            "password": generate_password_hash(request.form.get("password")),
-            "posts": 0,
-            "password_status": "set",
-        }
-        mongo.db.users.insert_one(register)
-        user_id = str(mongo.db.users.find_one(
-            {"email": register["email"]})["_id"])
-
-        # Create a copy of default.png and save it in profile_images
-        shutil.copyfile(f'{app.config["UPLOAD_FOLDER"]}default.png',
-                        f'{app.config["UPLOAD_FOLDER"]}{user_id}')
-
-        # Put the new user's name and _id into 'session' cookie, shows
-        # message confirming registration and redirects to profile
-        session['display_name'] = register['display_name']
-        session['user_id'] = user_id
-        flash("Registration Successful!")
-
-        return redirect(url_for(
-            "profile",
-            user_id=user_id))
     return render_template("register.html")
+
+
+@app.route("/register_post", methods=["POST"])
+def register_post():
+
+    # Check if username already exists in db
+    existing_user = mongo.db.users.find_one(
+        {"email": request.form.get("email").lower()})
+
+    # Shows message to user confirming that account already
+    # exists and redirects to register
+    if existing_user:
+        flash("Account already exists")
+        return redirect(url_for("register"))
+
+    # Inserts new user into db
+    register = {
+        "rank": "user",
+        "display_name": request.form.get("display_name"),
+        "email": request.form.get("email").lower(),
+        "password": generate_password_hash(request.form.get("password")),
+        "posts": 0,
+        "password_status": "set",
+    }
+    mongo.db.users.insert_one(register)
+    user_id = str(mongo.db.users.find_one(
+        {"email": register["email"]})["_id"])
+
+    # Create a copy of default.png and save it in profile_images
+    shutil.copyfile(f'{app.config["UPLOAD_FOLDER"]}default.png',
+                    f'{app.config["UPLOAD_FOLDER"]}{user_id}')
+
+    # Put the new user's name and _id into 'session' cookie, shows
+    # message confirming registration and redirects to profile
+    session['display_name'] = register['display_name']
+    session['user_id'] = user_id
+    flash("Registration Successful!")
+
+    return redirect(url_for("profile", user_id=user_id))
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == "POST":
+    return render_template("login.html")
 
-        # Check if usernarme exists in db
-        existing_user = mongo.db.users.find_one(
-            {"email": request.form.get("email").lower()})
 
-        if existing_user:
-            # Ensures hashed password matches user input, sets cookies,
-            # shows message welcoming user and redirects to profile
-            if check_password_hash(
-                    existing_user["password"],
-                    request.form.get("password")):
-                session["display_name"] = existing_user["display_name"]
-                session["user_id"] = str(existing_user["_id"])
-                flash("Welcome, {}".format(existing_user["display_name"]))
-                return redirect(url_for(
-                    "profile",
-                    user_id=session["user_id"]))
-            else:
-                # Invalid passwords match
-                flash("Incorrect Email and/or Password")
-                return redirect(url_for("login"))
+@app.route("/login_post", methods=["POST"])
+def login_post():
 
+    # Check if usernarme exists in db
+    existing_user = mongo.db.users.find_one(
+        {"email": request.form.get("email").lower()})
+
+    if existing_user:
+        # Ensures hashed password matches user input, sets cookies,
+        # shows message welcoming user and redirects to profile
+        if check_password_hash(
+                existing_user["password"],
+                request.form.get("password")):
+            session["display_name"] = existing_user["display_name"]
+            session["user_id"] = str(existing_user["_id"])
+            flash("Welcome, {}".format(existing_user["display_name"]))
+            return redirect(url_for(
+                "profile",
+                user_id=session["user_id"]))
         else:
-            # Username doesn't exist
+            # Invalid passwords match
             flash("Incorrect Email and/or Password")
             return redirect(url_for("login"))
 
-    return render_template("login.html")
+    else:
+        # Username doesn't exist
+        flash("Incorrect Email and/or Password")
+        return redirect(url_for("login"))
 
 
 @app.route("/logout")
@@ -293,7 +304,7 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/search", methods=["GET", "POST"])
+@app.route("/search", methods=["POST"])
 def search():
     # Queries the topics collection according to the value entered
     # in the search field and loads page with the results

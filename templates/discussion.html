@@ -102,7 +102,7 @@
             {% endfor %}
         </div>
         <!-- New Post form -->
-        <form class="row fixed-bottom" method="POST" action="{{ url_for('discussion', topic=topic_info._id) }}">
+        <form class="row fixed-bottom" method="POST" action="{{ url_for('discussion_post', topic=topic_info._id) }}">
             <div class="col s9 input-field">
                 <textarea id="post" name="post" type="text" class="materialize-textarea" required></textarea>
                 <label for="post"></label>

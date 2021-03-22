@@ -2,7 +2,7 @@
 {% block content %}
     <div class="container">
         <!-- Edit Profile form -->
-        <form method="POST" action="{{ url_for('edit_profile', user_id=session['user_id']) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ url_for('edit_profile_post', user=user, user_id=user._id) }}" enctype="multipart/form-data">
             <div class="card-panel">
                 <h3 class="center-align">User's Profile</h3>
                 <div class="row">
