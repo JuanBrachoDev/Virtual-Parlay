@@ -91,6 +91,67 @@ def remove_topic(topic):
     flash("Topic has been deleted.")
 
 
+def fetch_topic_and_posts(topic):
+    topic_info = mongo.db.topics.find_one({'_id': ObjectId(topic)})
+    posts = list(mongo.db.posts.find({'topic': topic}))
+    return topic_info, posts
+
+
+# Creates insert post document dict
+def create_post_document(topic):
+    post = {
+        "topic": topic,
+        "author": session['user_id'],
+        "date": datetime.now(),
+        "post": request.form.get("post")
+    }
+    return post
+
+
+def modify_post_count(topic, author, amount):
+    mongo.db.topics.update_one({"_id": ObjectId(topic)}, {
+                            "$inc": {"posts": amount}})
+    mongo.db.users.update_one({"_id": ObjectId(author)}, {
+                            "$inc": {"posts": amount}})
+
+
+def insert_new_post(topic):
+    post = create_post_document(topic)
+    # Insert new post into db
+    mongo.db.posts.insert_one(post)
+    # Increase post counts for the post and the user
+    modify_post_count(topic, post['author'], 1)
+
+
+def fetch_post(post_id):
+    post = mongo.db.posts.find_one({'_id': ObjectId(post_id)})
+    return post
+
+
+def update_post_document(post_info):
+    post = {
+        "topic": post_info['topic'],
+        "author": post_info['author'],
+        "date": post_info['date'],
+        "post": request.form.get(f"post_edit_{post_info['_id']}")
+    }
+    return post
+
+
+def update_post(post_info):
+    # Update post and flash message confirming changes
+    post = update_post_document(post_info)
+    mongo.db.posts.update({"_id": post_info['_id']}, post)
+    flash("Post Successfully Updated")
+
+
+def remove_post(post):
+    modify_post_count(post['topic'], post['author'], -1)
+    # Delete post from db and flash message confirming deletion
+    mongo.db.posts.delete_one({"_id": ObjectId(post['_id'])})
+    flash("Post has been deleted.")
+
+
 # Routes
 @app.route("/")
 @app.route("/index")
@@ -141,8 +202,7 @@ def delete_topic(topic):
 def discussion(topic):
 
     # Fetch topic info and posts within the topic from db
-    topic_info = mongo.db.topics.find_one({'_id': ObjectId(topic)})
-    posts = list(mongo.db.posts.find({'topic': topic}))
+    topic_info, posts = fetch_topic_and_posts(topic)
 
     return render_template(
         "discussion.html", topic_info=topic_info, posts=posts)
@@ -152,22 +212,11 @@ def discussion(topic):
 def discussion_post(topic):
 
     # Redirects user to login if no session exists
-    if session.get('user_id') is None:
+    if not check_user_is_logged_in():
         return redirect(url_for("login"))
 
-    # Insert new post into db
-    submit = {
-        "topic": topic,
-        "author": session['user_id'],
-        "date": datetime.now(),
-        "post": request.form.get("post")
-    }
-    mongo.db.posts.insert_one(submit)
-    # Increase post counts for the post and the user
-    mongo.db.topics.update({"_id": ObjectId(topic)}, {
-                            "$inc": {"posts": 1}})
-    mongo.db.users.update({"_id": ObjectId(submit['author'])}, {
-                            "$inc": {"posts": 1}})
+    insert_new_post(topic)
+
     return redirect(url_for("discussion", topic=topic))
 
 
@@ -175,37 +224,27 @@ def discussion_post(topic):
 def edit_post(post):
 
     # Redirects user to login if no session exists
-    if session.get('user_id') is None:
+    if not check_user_is_logged_in():
         return redirect(url_for("login"))
 
     # Fetch post from db
-    post_info = mongo.db.posts.find_one({'_id': ObjectId(post)})
+    post_info = fetch_post(post)
 
-    # Update post and flash message confirming changes
-    submit = {
-        "topic": post_info['topic'],
-        "author": post_info['author'],
-        "date": post_info['date'],
-        "post": request.form.get(f"post_edit_{post}")
-    }
-    mongo.db.posts.update({"_id": ObjectId(post)}, submit)
-    flash("Post Successfully Updated")
+    # Update post
+    update_post(post_info)
 
     return redirect(url_for("discussion", topic=post_info['topic']))
 
 
 @app.route("/delete_post/<post>")
 def delete_post(post):
-    post_info = mongo.db.posts.find_one({'_id': ObjectId(post)})
-    print(post)
+
+    # Fetch post from db
+    post_info = fetch_post(post)
+
     # Decrease post counts for the post and the user
-    mongo.db.topics.update_one({"_id": ObjectId(post_info['topic'])}, {
-                               "$inc": {"posts": -1}})
-    mongo.db.users.update_one({"_id": ObjectId(post_info['author'])}, {
-                              "$inc": {"posts": -1}})
-    # Delete post from db and flash message confirming deletion
-    mongo.db.posts.delete_one({"_id": ObjectId(post)})
-    flash("Post has been deleted.")
+    remove_post(post_info)
+
     return redirect(url_for("discussion", topic=post_info['topic']))
 
 
