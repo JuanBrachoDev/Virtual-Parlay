@@ -91,6 +91,7 @@ def remove_topic(topic):
     flash("Topic has been deleted.")
 
 
+# Fetch topic from db and all associated posts
 def fetch_topic_and_posts(topic):
     topic_info = mongo.db.topics.find_one({'_id': ObjectId(topic)})
     posts = list(mongo.db.posts.find({'topic': topic}))
@@ -108,6 +109,14 @@ def create_post_document(topic):
     return post
 
 
+# Fetch user from db
+def fetch_user(user_id):
+    user = mongo.db.users.find_one(
+        {"_id": ObjectId(user_id)})
+    return user
+
+
+# Modifies post count for user and topic
 def modify_post_count(topic, author, amount):
     mongo.db.topics.update_one({"_id": ObjectId(topic)}, {
                             "$inc": {"posts": amount}})
@@ -115,6 +124,7 @@ def modify_post_count(topic, author, amount):
                             "$inc": {"posts": amount}})
 
 
+# Insert post into db
 def insert_new_post(topic):
     post = create_post_document(topic)
     # Insert new post into db
@@ -123,11 +133,13 @@ def insert_new_post(topic):
     modify_post_count(topic, post['author'], 1)
 
 
+# Grabs post from db
 def fetch_post(post_id):
     post = mongo.db.posts.find_one({'_id': ObjectId(post_id)})
     return post
 
 
+# Creates update post document dict
 def update_post_document(post_info):
     post = {
         "topic": post_info['topic'],
@@ -138,18 +150,111 @@ def update_post_document(post_info):
     return post
 
 
+# Updates post and flashes message confirming changes
 def update_post(post_info):
-    # Update post and flash message confirming changes
     post = update_post_document(post_info)
     mongo.db.posts.update({"_id": post_info['_id']}, post)
     flash("Post Successfully Updated")
 
 
+# Modifies post count for topic and user, deletes post and flashes message
+# confirming changes
 def remove_post(post):
     modify_post_count(post['topic'], post['author'], -1)
     # Delete post from db and flash message confirming deletion
     mongo.db.posts.delete_one({"_id": ObjectId(post['_id'])})
     flash("Post has been deleted.")
+
+
+# Saves image in upload folder and grabs filename to save in db
+def save_profile_image():
+    profile_image = request.files['profile_picture']
+    filename = session['user_id']
+    profile_image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+
+# Creates update user document dict
+def update_user_document(user):
+    submit = {
+        "rank": "user",
+        "display_name": request.form.get("display_name"),
+        "email": user['email'],
+        "password": user['password'],
+        "posts": user['posts'],
+        "password_status": "set"
+    }
+    return submit
+
+
+# Saves profile image, updates user in db, updates cookies and shows
+# message confirming update
+def update_user(user):
+    save_profile_image()
+    submit = update_user_document(user)
+    mongo.db.users.update({"_id": ObjectId(user['_id'])}, submit)
+    session['display_name'] = submit['display_name']
+    flash("Profile Successfully Updated")
+
+
+# Fetch user from db
+def check_user_registered():
+    existing_user = mongo.db.users.find_one(
+        {"email": request.form.get("email").lower()})
+    return existing_user
+
+
+# Creates register user document dict
+def register_user_document():
+    # Inserts new user into db
+    register = {
+        "rank": "user",
+        "display_name": request.form.get("display_name"),
+        "email": request.form.get("email").lower(),
+        "password": generate_password_hash(request.form.get("password")),
+        "posts": 0,
+        "password_status": "set",
+    }
+    return register
+
+
+# Create a copy of default.png and save it in profile_images
+def set_profile_picture(user_id):
+    shutil.copyfile(f'{app.config["UPLOAD_FOLDER"]}default.png',
+                    f'{app.config["UPLOAD_FOLDER"]}{user_id}')
+
+
+# Put the new user's name and _id into 'session' cookie, shows
+# message confirming registration
+def set_cookies(register, user_id):
+    session['display_name'] = register['display_name']
+    session['user_id'] = user_id
+    flash("Registration Successful!")
+
+
+# Inserts new user into db, sets default profile picture and sets cookies
+def register_user():
+    register = register_user_document()
+    mongo.db.users.insert_one(register)
+    user_id = str(mongo.db.users.find_one(
+        {"email": register["email"]})["_id"])
+    set_profile_picture(user_id)
+    set_cookies(register, user_id)
+
+
+# Logs user out, shows message confirming changes and
+# deletes cookies
+def clear_session():
+    flash("You have been logged out.")
+    session.pop("display_name")
+    session.pop("user_id")
+
+
+# Queries the topics collection according to the value entered
+# in the search field and loads page with the results
+def search_topics():
+    query = request.form.get("search")
+    topics = list(mongo.db.topics.find({"$text": {"$search": query}}))
+    return topics
 
 
 # Routes
@@ -250,9 +355,9 @@ def delete_post(post):
 
 @app.route("/profile/<user_id>")
 def profile(user_id):
+
     # Fetch user from db
-    user = mongo.db.users.find_one(
-        {"_id": ObjectId(user_id)})
+    user = fetch_user(user_id)
 
     return render_template("profile.html", user=user)
 
@@ -261,8 +366,7 @@ def profile(user_id):
 def edit_profile(user_id):
 
     # Fetch user from db
-    user = mongo.db.users.find_one(
-        {"_id": ObjectId(user_id)})
+    user = fetch_user(user_id)
 
     # Allows user to edit own profile only if logged in, otherwise
     # redirect to main page
@@ -276,27 +380,13 @@ def edit_profile(user_id):
 def edit_profile_post(user_id):
 
     # Fetch user from db
-    user = mongo.db.users.find_one(
-        {"_id": ObjectId(user_id)})
+    user = fetch_user(user_id)
 
-    # Saves image in upload folder and grabs filename to save in db
-    profile_image = request.files['profile_picture']
-    filename = session['user_id']
-    profile_image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
+    # Store profile image in db
     # Update user and flash message confirming changes, then redirects
     # to updated profile page
-    submit = {
-        "rank": "user",
-        "display_name": request.form.get("display_name"),
-        "email": user['email'],
-        "password": user['password'],
-        "posts": user['posts'],
-        "password_status": "set"
-    }
-    mongo.db.users.update({"_id": ObjectId(user_id)}, submit)
-    session['display_name'] = submit['display_name']
-    flash("Profile Successfully Updated")
+    update_user(user)
+
     return redirect(url_for("profile", user_id=user_id))
 
 
@@ -309,8 +399,7 @@ def register():
 def register_post():
 
     # Check if username already exists in db
-    existing_user = mongo.db.users.find_one(
-        {"email": request.form.get("email").lower()})
+    existing_user = check_user_registered()
 
     # Shows message to user confirming that account already
     # exists and redirects to register
@@ -318,33 +407,12 @@ def register_post():
         flash("Account already exists")
         return redirect(url_for("register"))
 
-    # Inserts new user into db
-    register = {
-        "rank": "user",
-        "display_name": request.form.get("display_name"),
-        "email": request.form.get("email").lower(),
-        "password": generate_password_hash(request.form.get("password")),
-        "posts": 0,
-        "password_status": "set",
-    }
-    mongo.db.users.insert_one(register)
-    user_id = str(mongo.db.users.find_one(
-        {"email": register["email"]})["_id"])
+    register_user()
 
-    # Create a copy of default.png and save it in profile_images
-    shutil.copyfile(f'{app.config["UPLOAD_FOLDER"]}default.png',
-                    f'{app.config["UPLOAD_FOLDER"]}{user_id}')
-
-    # Put the new user's name and _id into 'session' cookie, shows
-    # message confirming registration and redirects to profile
-    session['display_name'] = register['display_name']
-    session['user_id'] = user_id
-    flash("Registration Successful!")
-
-    return redirect(url_for("profile", user_id=user_id))
+    return redirect(url_for("profile", user_id=session['user_id']))
 
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/login")
 def login():
     return render_template("login.html")
 
@@ -353,8 +421,7 @@ def login():
 def login_post():
 
     # Check if usernarme exists in db
-    existing_user = mongo.db.users.find_one(
-        {"email": request.form.get("email").lower()})
+    existing_user = check_user_registered()
 
     if existing_user:
         # Ensures hashed password matches user input, sets cookies,
@@ -362,8 +429,7 @@ def login_post():
         if check_password_hash(
                 existing_user["password"],
                 request.form.get("password")):
-            session["display_name"] = existing_user["display_name"]
-            session["user_id"] = str(existing_user["_id"])
+            set_cookies(existing_user, str(existing_user["_id"]))
             flash("Welcome, {}".format(existing_user["display_name"]))
             return redirect(url_for(
                 "profile",
@@ -372,7 +438,6 @@ def login_post():
             # Invalid passwords match
             flash("Incorrect Email and/or Password")
             return redirect(url_for("login"))
-
     else:
         # Username doesn't exist
         flash("Incorrect Email and/or Password")
@@ -381,20 +446,13 @@ def login_post():
 
 @app.route("/logout")
 def logout():
-    # Logs user out, shows message confirming changes and
-    # deletes cookies
-    flash("You have been logged out.")
-    session.pop("display_name")
-    session.pop("user_id")
+    clear_session()
     return redirect(url_for("login"))
 
 
 @app.route("/search", methods=["POST"])
 def search():
-    # Queries the topics collection according to the value entered
-    # in the search field and loads page with the results
-    query = request.form.get("search")
-    topics = list(mongo.db.topics.find({"$text": {"$search": query}}))
+    topics = search_topics()
     return render_template("index.html", topics=topics)
 
 
