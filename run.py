@@ -30,26 +30,22 @@ def send_file(filename):
     return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
 
 
-# Routes
-@app.route("/")
-@app.route("/index")
-def index():
+# Helper functions for routes
 
-    # Fetch topics collection from db
-    topics = list(mongo.db.topics.find())
-    return render_template("index.html", topics=topics)
+# Grabs topics collection from db
+def fetch_topics():
+    return list(mongo.db.topics.find())
 
 
-@app.route("/index_post", methods=["POST"])
-def index_post():
+# Checks if user is logged in
+def check_user_is_logged_in():
+    if session.get('user_id') is not None:
+        return True
 
-    # Redirects user to login if no session exists
-    if session.get('user_id') is None:
-        return redirect(url_for("login"))
 
-    # Create new topic, flash a message confirming the
-    # insertion and reload page
-    submit = {
+# Creates insert topic document dict
+def create_topic_document():
+    topic = {
         "author": session['user_id'],
         "author_name": session['display_name'],
         "title": request.form.get("title"),
@@ -57,8 +53,66 @@ def index_post():
         "posts": 0,
         "date": datetime.now()
     }
+    return topic
+
+
+# Creates new topic document, inserts into db, flashes a message confirming
+# the insertion
+def insert_new_topic():
+    submit = create_topic_document()
     mongo.db.topics.insert_one(submit)
+    flash("Topic Successfully Created")
+
+
+# Creates update topic document dict
+def update_topic_document(topic_info):
+    topic = {
+        "author": topic_info['author'],
+        "author_name": topic_info['author_name'],
+        "title": request.form.get("topic_title"),
+        "description": request.form.get("topic_description"),
+        "posts": topic_info['posts'],
+        "date": topic_info['date']
+    }
+    return topic
+
+
+# Creates update topic document, update db and flashes message confirming the
+# update
+def update_topic(topic_info):
+    submit = update_topic_document(topic_info)
+    mongo.db.topics.update({"_id": topic_info["_id"]}, submit)
     flash("Topic Successfully Updated")
+
+
+# Deletes topic from db and flashes message confirming deletion
+def remove_topic(topic):
+    mongo.db.topics.remove({"_id": ObjectId(topic)})
+    flash("Topic has been deleted.")
+
+
+# Routes
+@app.route("/")
+@app.route("/index")
+def index():
+
+    # Fetch topics collection from db
+    topics = fetch_topics()
+
+    return render_template("index.html", topics=topics)
+
+
+@app.route("/index_post", methods=["POST"])
+def index_post():
+
+    # Redirects user to login if no session exists
+    if not check_user_is_logged_in():
+        return redirect(url_for("login"))
+
+    # Create new topic, flash a message confirming the
+    # insertion and reload page
+    insert_new_topic()
+
     return redirect(url_for("index"))
 
 
@@ -69,25 +123,17 @@ def edit_topic(topic):
     topic_info = mongo.db.topics.find_one({'_id': ObjectId(topic)})
 
     # Update topic and flash message confirming changes
-    submit = {
-        "author": topic_info['author'],
-        "author_name": topic_info['author_name'],
-        "title": request.form.get("topic_title"),
-        "description": request.form.get("topic_description"),
-        "posts": topic_info['posts'],
-        "date": topic_info['date']
-    }
-    mongo.db.topics.update({"_id": ObjectId(topic)}, submit)
-    flash("Topic Successfully Updated")
+    update_topic(topic_info)
 
     return redirect(url_for("discussion", topic=topic_info['_id']))
 
 
 @app.route("/delete_topic/<topic>")
 def delete_topic(topic):
+
     # Remove topic from db and flash message confirming deletion
-    mongo.db.topics.remove({"_id": ObjectId(topic)})
-    flash("Topic has been deleted.")
+    remove_topic(topic)
+
     return redirect(url_for("index"))
 
 
