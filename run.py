@@ -96,7 +96,7 @@ def update_topic_document(topic_info):
 # Creates update topic document, update db and flashes message confirming the
 # update
 def update_topic(topic_info):
-    if check_owner_or_admin(topic_info['_id']):
+    if check_owner_or_admin(topic_info['author']):
         submit = update_topic_document(topic_info)
         mongo.db.topics.update({"_id": topic_info["_id"]}, submit)
         flash("Topic Successfully Updated")
@@ -105,7 +105,7 @@ def update_topic(topic_info):
 # Deletes topic from db and flashes message confirming deletion
 def remove_topic(topic_id):
     topic_info = fetch_single_topic(topic_id)
-    if check_owner_or_admin(topic_info['_id']):
+    if check_owner_or_admin(topic_info['author']):
         mongo.db.topics.remove({"_id": ObjectId(topic_id)})
         flash("Topic has been deleted.")
 
@@ -171,7 +171,7 @@ def update_post_document(post_info):
 
 # Updates post and flashes message confirming changes
 def update_post(post_info):
-    if check_owner_or_admin(post_info['_id']):
+    if check_owner_or_admin(post_info['author']):
         post = update_post_document(post_info)
         mongo.db.posts.update({"_id": post_info['_id']}, post)
         flash("Post Successfully Updated")
@@ -180,7 +180,7 @@ def update_post(post_info):
 # Modifies post count for topic and user, deletes post and flashes message
 # confirming changes
 def remove_post(post):
-    if check_owner_or_admin(post):
+    if check_owner_or_admin(post['author']):
         modify_post_count(post['topic'], post['author'], -1)
         # Delete post from db and flash message confirming deletion
         mongo.db.posts.delete_one({"_id": ObjectId(post['_id'])})
@@ -373,6 +373,10 @@ def edit_post(post):
 
 @app.route("/delete_post/<post>")
 def delete_post(post):
+
+    # Redirects user to login if no session exists
+    if not check_user_is_logged_in():
+        return redirect(url_for("login"))
 
     # Fetch post from db
     post_info = fetch_post(post)
