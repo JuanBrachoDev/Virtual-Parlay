@@ -202,7 +202,6 @@ def update_user_document(user):
         "email": user['email'],
         "password": user['password'],
         "posts": user['posts'],
-        "password_status": "set"
     }
     return submit
 
@@ -234,7 +233,6 @@ def register_user_document():
         "email": request.form.get("email").lower(),
         "password": generate_password_hash(request.form.get("password")),
         "posts": 0,
-        "password_status": "set",
     }
     return register
 

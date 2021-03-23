@@ -11,6 +11,7 @@ html {
     color: black;
     font-family: 'Merienda', cursive;
     height: 100%;
+    scroll-behavior: smooth;
 }
 
 main {
