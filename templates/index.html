@@ -39,10 +39,10 @@
         <!-- Topics -->
         {% for topic in topics %}
             <div class="row topic">
-                <a class="col s6 truncate" href="{{ url_for('discussion', topic=topic._id) }}">{{ topic.title }}</a>
-                <a class="col s2" href="{{ url_for('profile', user_id=topic.author) }}">{{ topic.author_name }}</a>
+                <a class="col s4 truncate" href="{{ url_for('discussion', topic=topic._id) }}">{{ topic.title }}</a>
+                <a class="col s3 truncate" href="{{ url_for('profile', user_id=topic.author) }}">{{ topic.author_name }}</a>
                 <span class="col s2"><i class="fa fa-comments" aria-hidden="true"></i>{{ topic.posts }}</span>
-                <span class="col s2">{{ topic.date }}</span>
+                <span class="col s3">{{ topic.date }}</span>
             </div>
         {% endfor %}
     </div>

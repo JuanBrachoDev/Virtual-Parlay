@@ -1,20 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="container">
-        <!-- Topic area -->
-        <div id="topic_area" class="card-panel">
-            <!-- Post Title and Description -->
-            <h3 class="center-align">{{ topic_info.title }}</h3>
-            <div class="row">
-                <p class="col s12 center-align">{{ topic_info.description }}</p>
-            </div>
-            {% if topic_info.author == session['user_id'] %}
-                <!-- Edit/Delete buttons -->
-                <div class="row center-align">
-                    <button class="btn" onclick="showTopicEdit()" type="button">Edit</button>
-                    <a class="btn" href="{{ url_for('delete_topic', topic=topic_info._id) }}">Delete</a>
+        <div class="row">
+            <!-- Topic area -->
+            <div id="topic_area" class="card-panel col s12 offset-m2 m8 offset-xl3 xl6">
+                <!-- Post Title and Description -->
+                <h3 class="center-align">{{ topic_info.title }}</h3>
+                <div class="row">
+                    <p class="col s12 center-align">{{ topic_info.description }}</p>
                 </div>
-            {% endif %}
+                {% if topic_info.author == session['user_id'] %}
+                    <!-- Edit/Delete buttons -->
+                    <div class="row center-align">
+                        <button class="btn" onclick="showTopicEdit()" type="button">Edit</button>
+                        <a class="btn" href="{{ url_for('delete_topic', topic=topic_info._id) }}">Delete</a>
+                    </div>
+                {% endif %}
+            </div>
         </div>
         <!-- Edit Topic form -->
         <div id="edit_topic_area" class="row card-panel hide">
@@ -53,8 +55,8 @@
                             </a>
                             <!-- Edit/Delete dropdown -->
                             <ul id="post-options_{{ post._id }}" class="dropdown-content">
-                                <li><button class="btn" data-post="{{ post._id }}" onclick="showPostEdit(this)"
-                                        type="button">Edit</button></li>
+                                <li><a data-post="{{ post._id }}" onclick="showPostEdit(this)"
+                                        type="button">Edit</a></li>
                                 <li><a href="{{ url_for('delete_post', post=post._id) }}">Delete</a></li>
                             </ul>
                         </div>
@@ -94,7 +96,7 @@
                             </a>
                         </div>
                         <!-- Post Text -->
-                        <div class="col s11 speech-bubble chat-left">
+                        <div class="col offset-s2 s9 offset-m1 m10 offset-l0 l11 speech-bubble chat-left">
                             <p>{{ post.post }}</p>
                         </div>
                     </div>
@@ -102,14 +104,16 @@
             {% endfor %}
         </div>
         <!-- New Post form -->
-        <form class="row fixed-bottom" method="POST" action="{{ url_for('discussion_post', topic=topic_info._id) }}">
-            <div class="col s9 input-field">
-                <textarea id="post" name="post" type="text" class="materialize-textarea" required></textarea>
-                <label for="post"></label>
-            </div>
-            <div class="col s3 input-field">
-                <button class="btn" type="submit">Send</button>
-            </div>
-        </form>
+        <div class="row footer">        
+            <form method="POST" action="{{ url_for('discussion_post', topic=topic_info._id) }}">
+                <div class="col s9 m10 l11 input-field">
+                    <textarea id="post" name="post" type="text" class="materialize-textarea" required></textarea>
+                    <label for="post"></label>
+                </div>
+                <div class="input-field valign-wrapper">
+                    <button id="discussion-send-button" class="btn" type="submit"><i class="fa fa-comment center-align" aria-hidden="true"></i></button>
+                </div>
+            </form>
+        </div>
     </div>
 {% endblock %}

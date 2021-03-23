@@ -67,7 +67,7 @@ def create_topic_document():
         "title": request.form.get("title"),
         "description": request.form.get("description"),
         "posts": 0,
-        "date": datetime.now()
+        "date": datetime.now().strftime("%d %b")
     }
     return topic
 

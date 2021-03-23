@@ -19,7 +19,7 @@
 
 <body>
     <!-- Header -->
-    <header>
+    <header class="navbar-fixed">
         <!-- Top navbar -->
         <nav class="text-shadow light-blue darken-1">
             <div class="nav-wrapper">
@@ -50,21 +50,21 @@
                 </form>
             </div>
         </nav>
-        <!-- Mobile sidenav -->
-        <ul class="sidenav" id="mobile-trigger">
-            <li>
-                <h4 class="center-align">Virtual Parlay</h4>
-            </li>
-            <li><a href="{{ url_for('index') }}">All Topics</a></li>
-            {% if session.user_id %}
-                <li><a href="{{ url_for('profile', user_id=session['user_id']) }}">Profile</a></li>
-                <li><a href="{{ url_for('logout') }}">Log Out</a></li>
-            {% else %}
-                <li><a href="{{ url_for('login') }}">Log In</a></li>
-                <li><a href="{{ url_for('register') }}">Register</a></li>
-            {% endif %}
-        </ul>
     </header>
+    <!-- Mobile sidenav -->
+    <ul class="sidenav" id="mobile-trigger">
+        <li>
+            <h4 class="center-align">Virtual Parlay</h4>
+        </li>
+        <li><a href="{{ url_for('index') }}">All Topics</a></li>
+        {% if session.user_id %}
+            <li><a href="{{ url_for('profile', user_id=session['user_id']) }}">Profile</a></li>
+            <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+        {% else %}
+            <li><a href="{{ url_for('login') }}">Log In</a></li>
+            <li><a href="{{ url_for('register') }}">Register</a></li>
+        {% endif %}
+    </ul>
     <!-- Flash messages -->
     <section>
         {% with messages = get_flashed_messages() %}

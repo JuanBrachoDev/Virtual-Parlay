@@ -5,11 +5,16 @@
 /* ----------------- Document ----------------- */
 
 html {
-    background-image: linear-gradient(to top, #015374, #B1F4FC);
+    background-image: linear-gradient(to top, #01173f, #B1F4FC);
     background-color: #B1F4FC;
+    background-attachment: fixed;
     color: black;
     font-family: 'Merienda', cursive;
     height: 100%;
+}
+
+main {
+    padding-bottom: 50px;
 }
 
 h3 {
@@ -150,13 +155,41 @@ header {
 .post-profile-picture {
     width: 49px;
     height: 49px;
+    border-radius: 50%;
+}
+
+#discussion-send-button {
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+    padding: 0;
+    border-radius: 50%;
+}
+
+.footer {
+    background-image: url('../images/wood_pattern.png');
+    background-repeat: repeat;
+    position: sticky;
+    bottom: 0;
+    border-radius: 10px;
+    border: 2px outset gray;
+    padding-left: 20px;
 }
 
 /* ----------------- Profile  ----------------- */
 
 .profile-picture {
-    height: 250px;
-    width: 250px;
+    height: 200px;
+    width: 200px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-style: inset;
+    border-image-slice: 120 120 120 120;
+    border-image-width: 23px 23px 23px 23px;
+    border-image-outset: 20px 20px 20px 20px;
+    border-image-repeat: stretch stretch;
+    border-image-source: url('../images/profile_frame.png');
+    
 }
 
 .profile-info {
