@@ -44,9 +44,9 @@
 
 *   ### Wireframes
 
-    -   Mobile Wireframe - [View](https://github.com/JuanBrachoDev/Virtual-Parlay/tree/master/docs/wireframes/mobile)
+    -   Mobile Wireframe - [View](https://github.com/JuanBrachoDev/Virtual-Parlay/tree/master/docs/readme/wireframes/mobile)
 
-    -   Desktop Wireframe - [View](https://github.com/JuanBrachoDev/Virtual-Parlay/tree/master/docs/wireframes/desktop)
+    -   Desktop Wireframe - [View](https://github.com/JuanBrachoDev/Virtual-Parlay/tree/master/docs/readme/wireframes/desktop)
 
 ## Database
 
@@ -109,7 +109,7 @@ Three different collections were used throughout this project, the database serv
 1. [MongoDB:](https://www.mongodb.com/)
     - MongoDB was the document-based database service used.
 1. [Balsamiq:](https://balsamiq.com/)
-    - Balsamiq was used to create the [Mobile](https://github.com/JuanBrachoDev/Virtual-Parlay/tree/master/docs/wireframes/mobile) and [Desktop](https://github.com/JuanBrachoDev/Virtual-Parlay/tree/master/docs/wireframes/desktop) wireframes during the design process.
+    - Balsamiq was used to create the [Mobile](https://github.com/JuanBrachoDev/Virtual-Parlay/tree/master/docs/readme/wireframes/mobile) and [Desktop](https://github.com/JuanBrachoDev/Virtual-Parlay/tree/master/docs/readme/wireframes/desktop) wireframes during the design process.
 1. [Am I responsive:](http://ami.responsivedesign.is/)
     - Used to efficiently test different responsive layouts and provide the header image in the readme file.
 1. [Dillinger:](http://dillinger.io/)
