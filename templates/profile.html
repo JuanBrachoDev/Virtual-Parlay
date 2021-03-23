@@ -1,25 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="container">
-        <div class="card-panel">
-            <h3 class="center-align">{{ user.display_name }}'s Profile</h3>
-            <!-- Profile picture -->
-            <div class="center-align">
-                <img class="profile-picture" src="{{ url_for('send_file', filename=user._id) }}" alt="Profile Picture">
-            </div>
-            <!-- Profile info -->
-            <div class="row">
-                <ul class="profile-info center-align">
-                    <li>Email: <span>{{ user.email }}</span></li>
-                    <li>Posts: <span>{{ user.posts }}</span></li>
-                </ul>
-            </div>
-            <!-- Edit Profile button -->
-            {% if user._id|string() == session['user_id'] %}
+        <div class="row">        
+            <div class="card-panel col s12 offset-m2 m8 offset-xl3 xl6">
+                <h3 class="center-align">{{ user.display_name }}'s Profile</h3>
+                <!-- Profile picture -->
                 <div class="center-align">
-                    <a class="btn" href="{{ url_for('edit_profile', user_id=session['user_id']) }}">Edit Profile</a>
+                    <img class="profile-picture" src="{{ url_for('send_file', filename=user._id) }}" alt="Profile Picture">
                 </div>
-            {% endif %}
+                <!-- Profile info -->
+                <div class="row">
+                    <ul class="profile-info center-align">
+                        <li>Email: <span>{{ user.email }}</span></li>
+                        <li>Posts: <span>{{ user.posts }}</span></li>
+                    </ul>
+                </div>
+                <!-- Edit Profile button -->
+                {% if user._id|string() == session['user_id'] %}
+                    <div class="center-align row">
+                        <a class="btn" href="{{ url_for('edit_profile', user_id=session['user_id']) }}">Edit Profile</a>
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}

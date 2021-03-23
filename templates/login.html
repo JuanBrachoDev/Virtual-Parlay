@@ -3,25 +3,27 @@
     <h3 class="center-align">Log In</h3>
     <div class="container">
         <!-- Login form -->
-        <form method="POST" action="{{ url_for('login_post') }}">
-            <div class="card-panel">
-                <div class="row">
-                    <!-- Email -->
-                    <div class="col s12 center-align input-field">
-                        <input id="email" name="email" type="email" minlength="3" class="validate" required>
-                        <label for="email">Email</label>
-                    </div>
-                    <!-- Password -->
-                    <div class="col s12 center-align input-field">
-                        <input id="password" name="password" type="password" minlength="8" maxlength="40" class="validate" onkeyup="checkConfirmPassword(this);" required>
-                        <label for="password">Password</label>
-                    </div>
-                    <!-- Log In button -->
-                    <div class="row center-align">
-                        <button class="btn" type="submit">Log In</button>
-                    </div>
-                </div> 
-            </div>
-        </form>
+        <div class="row">
+            <form method="POST" action="{{ url_for('login_post') }}">
+                <div class="card-panel col s12 offset-m2 m8 offset-xl3 xl6">
+                    <div class="row">
+                        <!-- Email -->
+                        <div class="col offset-s1 s10 center-align input-field">
+                            <input id="email" name="email" type="email" minlength="3" class="validate" required>
+                            <label for="email">Email</label>
+                        </div>
+                        <!-- Password -->
+                        <div class="col offset-s1 s10 center-align input-field">
+                            <input id="password" name="password" type="password" minlength="8" maxlength="40" class="validate" onkeyup="checkConfirmPassword(this);" required>
+                            <label for="password">Password</label>
+                        </div>
+                        <!-- Log In button -->
+                        <div class="row center-align">
+                            <button class="btn" type="submit">Log In</button>
+                        </div>
+                    </div> 
+                </div>
+            </form>
+        </div>
     </div>
 {% endblock %}

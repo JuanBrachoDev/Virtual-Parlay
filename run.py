@@ -288,7 +288,6 @@ def index():
 
     # Fetch topics collection from db
     topics = fetch_topics()
-    print(session['rank'])
 
     return render_template("index.html", topics=topics)
 

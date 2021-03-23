@@ -5,9 +5,11 @@
 /* ----------------- Document ----------------- */
 
 html {
+    background-image: linear-gradient(to top, #015374, #B1F4FC);
     background-color: #B1F4FC;
     color: black;
     font-family: 'Merienda', cursive;
+    height: 100%;
 }
 
 h3 {
@@ -36,6 +38,7 @@ form .input-field input, form .input-field label {
     background-image: url('../images/wood_pattern.png');
     background-repeat: repeat;
     border: 2px outset gray;
+    border-radius: 3%;
 }
 
 /* ----------------- Base ----------------- */
@@ -158,6 +161,10 @@ header {
 
 .profile-info {
     font-size: 20px;
+}
+
+.edit-profile-button{
+    margin-bottom: 20px;
 }
 
 /* ----------------- Media Queries  ----------------- */

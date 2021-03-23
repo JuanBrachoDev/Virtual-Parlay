@@ -29,7 +29,7 @@
                     <!-- Submit and Cancel buttons -->
                     <div class="row">
                         <div class="center-align">
-                            <button class="btn" type="reset">Cancel</button>
+                            <a class="btn" href="{{ url_for('index') }}">Cancel</a>
                             <button class="btn" type="submit">Confirm</button>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
         <!-- Topics -->
         {% for topic in topics %}
             <div class="row topic">
-                <a class="col s6" href="{{ url_for('discussion', topic=topic._id) }}">{{ topic.title }}</a>
+                <a class="col s6 truncate" href="{{ url_for('discussion', topic=topic._id) }}">{{ topic.title }}</a>
                 <a class="col s2" href="{{ url_for('profile', user_id=topic.author) }}">{{ topic.author_name }}</a>
                 <span class="col s2"><i class="fa fa-comments" aria-hidden="true"></i>{{ topic.posts }}</span>
                 <span class="col s2">{{ topic.date }}</span>
