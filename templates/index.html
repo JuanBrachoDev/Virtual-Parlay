@@ -1,15 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2 class="center-align">All Topics</h2>
     <div class="container">
         <!-- Topics -->
-        {% for topic in topics %}
-            <div class="row topic">
-                <a class="col s4 truncate" href="{{ url_for('discussion', topic=topic._id) }}">{{ topic.title }}</a>
-                <a class="col s3 truncate" href="{{ url_for('profile', user_id=topic.author) }}">{{ topic.author_name }}</a>
-                <span class="col s2"><i class="fa fa-comments" aria-hidden="true"></i>{{ topic.posts }}</span>
-                <span class="col s3">{{ topic.date }}</span>
-            </div>
-        {% endfor %}
+        <div class="topics-list">
+            <h2 class="center-align title">Topics</h2>
+            {% for topic in topics %}
+                <div class="row topic">
+                    <a class="col center-align s12 truncate topic-title" href="{{ url_for('discussion', topic=topic._id) }}"><u>{{ topic.title }}</u></a>
+                    <span class="col s12 center-align topic-description">{{ topic.description }}</span>
+                    <a class="col s12 m3 center-align truncate topic-author" href="{{ url_for('profile', user_id=topic.author) }}">By: <u>{{ topic.author_name }}</u></a>
+                    <span class="col s3 m3 center-align topic-info"><i class="fa fa-comments" aria-hidden="true"></i>{{ topic.posts }}</span>
+                    <span class="col s9 m6 center-align truncate topic-info">{{ topic.date.strftime("%H:%M, %d/%m/%y") }}</span>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

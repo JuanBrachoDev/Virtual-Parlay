@@ -11,7 +11,7 @@ if os.path.exists("env.py"):
     import env
 
 # App config
-app = Flask(__name__) 
+app = Flask(__name__)
 
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
@@ -43,7 +43,7 @@ def check_owner_or_admin(author):
 
 # Grabs topics collection from db
 def fetch_topics():
-    return list(mongo.db.topics.find())
+    return list(mongo.db.topics.find().sort("date", -1))
 
 
 # Grabs single topic based on the id
@@ -66,7 +66,7 @@ def create_topic_document():
         "title": request.form.get("title"),
         "description": request.form.get("description"),
         "posts": 0,
-        "date": datetime.now().strftime("%d %b")
+        "date": datetime.now()
     }
     return topic
 
@@ -137,9 +137,9 @@ def fetch_user(user_id):
 # Modifies post count for user and topic
 def modify_post_count(topic, author, amount):
     mongo.db.topics.update_one({"_id": ObjectId(topic)}, {
-                            "$inc": {"posts": amount}})
+        "$inc": {"posts": amount}})
     mongo.db.users.update_one({"_id": ObjectId(author)}, {
-                            "$inc": {"posts": amount}})
+        "$inc": {"posts": amount}})
 
 
 # Insert post into db
@@ -274,7 +274,8 @@ def clear_session():
 # in the search field and loads page with the results
 def search_topics():
     query = request.form.get("search")
-    topics = list(mongo.db.topics.find({"$text": {"$search": query}}))
+    topics = list(mongo.db.topics.find(
+        {"$text": {"$search": query}}).sort("date", -1))
     return topics
 
 

@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-    <h3 class="center-align">New Topic</h3>
     <div class="container">
         <!-- Login form -->
         <div class="row">
             <!-- New Topic form -->
                 <form method="POST" action="{{ url_for('insert_topic_in_database') }}">
                     <div class="card-panel">
+                        <h3 class="center-align title">New Topic</h3>
                         <div class="row">
                             <!-- Title input -->
                             <div class="col s12 center-align input-field">

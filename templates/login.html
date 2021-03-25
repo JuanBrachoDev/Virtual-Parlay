@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-    <h3 class="center-align">Log In</h3>
     <div class="container">
         <!-- Login form -->
         <div class="row">
             <form method="POST" action="{{ url_for('validate_user') }}">
                 <div class="card-panel col s12 offset-m2 m8 offset-xl3 xl6">
+                    <h3 class="center-align">Log In</h3>
                     <div class="row">
                         <!-- Email -->
                         <div class="col offset-s1 s10 center-align input-field">

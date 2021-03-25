@@ -41,10 +41,9 @@ form .input-field input, form .input-field label {
 }
 
 .card-panel {
-    background-image: url('../images/wood_pattern.png');
-    background-repeat: repeat;
     border: 2px outset gray;
-    border-radius: 3%;
+    border-radius: 5px;
+    background-color: whitesmoke;
 }
 
 /* ----------------- Base ----------------- */
@@ -99,12 +98,41 @@ header {
 
 /* ----------------- Index  ----------------- */
 
-.topic {
-    padding-top: 20px;
-    padding-bottom: 20px;
+.title {
+    margin-top: 0px;
+}
+
+.topics-list {
+    padding: 20px 10px 0px;
     border: 2px outset gray;
-    background-image: url('../images/wood_pattern.png');
-    background-repeat: repeat;
+    border-radius: 5px;
+    background-color: whitesmoke;
+}
+
+.topic {
+    padding-top: 10px;
+    padding-bottom: 5px;
+    margin: 0px 10px 20px;
+    border: 2px outset gray;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.topic-title {
+    margin-bottom: 10px;
+    font-size: large;
+}
+
+.topic-description {
+    margin-bottom: 10px;
+}
+
+.topic-author {
+    margin-bottom: 10px;
+}
+
+.topic-info {
+    color: grey;
 }
 
 /* ----------------- Discussion  ----------------- */
@@ -168,8 +196,7 @@ header {
 }
 
 .footer {
-    background-image: url('../images/wood_pattern.png');
-    background-repeat: repeat;
+    background-color: whitesmoke;
     position: sticky;
     bottom: 0;
     border-radius: 10px;
@@ -184,12 +211,7 @@ header {
     width: 200px;
     margin-top: 30px;
     margin-bottom: 30px;
-    border-style: inset;
-    border-image-slice: 120 120 120 120;
-    border-image-width: 23px 23px 23px 23px;
-    border-image-outset: 20px 20px 20px 20px;
-    border-image-repeat: stretch stretch;
-    border-image-source: url('../images/profile_frame.png');
+    border: 2px solid gray;
     
 }
 

@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-    <h3 class="center-align">Register</h3>
     <div class="container">
         <!-- Register form -->
         <div class="row">
             <form method="POST" action="{{ url_for('insert_user_in_database') }}">
                 <div class="card-panel col s12 offset-m2 m8 offset-xl3 xl6">
+                    <h3 class="center-align">Register</h3>
                     <div class="row">
                         <!-- Display Name -->
                         <div class="col offset-s1 s10 center-align input-field">
@@ -20,7 +20,7 @@
                         <!-- Password -->
                         <div class="col offset-s1 s10 center-align input-field">
                             <input id="password" name="password" type="password" minlength="8" maxlength="40" class="validate" onkeyup="checkConfirmPassword(this);" required>
-                            <label for="password">Password (mininum 8 characters)</label>
+                            <label for="password">Password (min 8 characters)</label>
                         </div>
                         <!-- Confirm Password -->
                         <div class="col offset-s1 s10 center-align input-field">
