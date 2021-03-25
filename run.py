@@ -3,7 +3,7 @@ from datetime import datetime
 import shutil
 from flask import (
     Flask, flash, render_template, send_from_directory,
-    redirect, request, session, url_for, Blueprint)
+    redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -11,13 +11,12 @@ if os.path.exists("env.py"):
     import env
 
 # App config
-app = Flask(__name__)
-
-profile_images = f'{app.root_path}/profile_images/'
+app = Flask(__name__) 
 
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
-app.config['UPLOAD_FOLDER'] = profile_images
+app.config['UPLOAD_FOLDER'] = f'{app.root_path}/profile_images/'
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.secret_key = os.environ.get("SECRET_KEY")
 
 # Database
@@ -290,8 +289,8 @@ def index():
     return render_template("index.html", topics=topics)
 
 
-@app.route("/index_post", methods=["POST"])
-def index_post():
+@app.route("/create_topic", methods=["POST"])
+def create_topic():
 
     # Redirects user to login if no session exists
     if not check_user_is_logged_in():
@@ -341,8 +340,8 @@ def discussion(topic):
         "discussion.html", topic_info=topic_info, posts=posts)
 
 
-@app.route("/discussion_post/<topic>", methods=["POST"])
-def discussion_post(topic):
+@app.route("/create_post/<topic>", methods=["POST"])
+def create_post(topic):
 
     # Redirects user to login if no session exists
     if not check_user_is_logged_in():
@@ -408,8 +407,8 @@ def edit_profile(user_id):
     return redirect(url_for("index"))
 
 
-@app.route("/edit_profile_post/<user_id>", methods=["POST"])
-def edit_profile_post(user_id):
+@app.route("/update_user_details/<user_id>", methods=["POST"])
+def update_user_details(user_id):
 
     # Fetch user from db
     user = fetch_user(user_id)
@@ -426,8 +425,8 @@ def register():
     return render_template("register.html")
 
 
-@app.route("/register_post", methods=["POST"])
-def register_post():
+@app.route("/insert_user_in_database", methods=["POST"])
+def insert_user_in_database():
 
     # Check if username already exists in db
     existing_user = check_user_registered()
@@ -452,8 +451,8 @@ def login():
     return render_template("login.html")
 
 
-@app.route("/login_post", methods=["POST"])
-def login_post():
+@app.route("/validate_user", methods=["POST"])
+def validate_user():
 
     # Check if usernarme exists in db
     existing_user = check_user_registered()

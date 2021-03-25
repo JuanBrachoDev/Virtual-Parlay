@@ -14,7 +14,9 @@ class FlaskTestCase(unittest.TestCase):
         tester = app.test_client(self)
         response = tester.post(
             '/index_post', data={'title': 'Test Case', 'description': 'This is for the test case.'})
-        self.assertEqual(response.status_code, 302)
+        data = response.json()
+        print(data.status_code)
+        self.assertEqual(data.status_code, 302)
 
     def test_login(self):
         tester = app.test_client(self)

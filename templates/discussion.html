@@ -105,7 +105,7 @@
         </div>
         <!-- New Post form -->
         <div class="row footer">        
-            <form method="POST" action="{{ url_for('discussion_post', topic=topic_info._id) }}">
+            <form method="POST" action="{{ url_for('create_post', topic=topic_info._id) }}">
                 <div class="col s9 m10 l11 input-field">
                     <textarea id="post" name="post" type="text" class="materialize-textarea" required></textarea>
                     <label for="post"></label>
