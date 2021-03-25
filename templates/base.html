@@ -32,6 +32,7 @@
                 <a href="#" data-target="mobile-trigger" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
                 <!-- Button Menu -->
                 <ul class="right hide-on-med-and-down">
+                    <li><a href="{{ url_for('create_topic') }}">New Topic</a></li>
                     <li><a href="{{ url_for('index') }}">All Topics</a></li>
                     {% if session.user_id %}
                         <li><a href="{{ url_for('profile', user_id=session['user_id']) }}">Profile</a></li>
@@ -57,6 +58,7 @@
         <li>
             <h4 class="center-align">Virtual Parlay</h4>
         </li>
+        <li><a href="{{ url_for('create_topic') }}">New Topic</a></li>
         <li><a href="{{ url_for('index') }}">All Topics</a></li>
         {% if session.user_id %}
             <li><a href="{{ url_for('profile', user_id=session['user_id']) }}">Profile</a></li>

@@ -289,8 +289,18 @@ def index():
     return render_template("index.html", topics=topics)
 
 
-@app.route("/create_topic", methods=["POST"])
+@app.route("/create_topic")
 def create_topic():
+
+    # Redirects user to login if no session exists
+    if not check_user_is_logged_in():
+        return redirect(url_for("login"))
+
+    return render_template("create_topic.html")
+
+
+@app.route("/insert_topic_in_database", methods=["POST"])
+def insert_topic_in_database():
 
     # Redirects user to login if no session exists
     if not check_user_is_logged_in():
