@@ -34,7 +34,7 @@ def send_file(filename):
 # Checks if the user owns the topic/post or is admin, shows message to user
 # if 'False'
 def check_owner_or_admin(author):
-    if author == session['user_id'] or session['rank'] == 'admin':
+    if str(author) == session['user_id'] or session['rank'] == 'admin':
         return True
     else:
         flash("You are not the owner.")

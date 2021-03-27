@@ -12,6 +12,7 @@ html {
     font-family: 'Merienda', cursive;
     height: 100%;
     scroll-behavior: smooth;
+    word-wrap: break-word;
 }
 
 main {
@@ -137,10 +138,6 @@ header {
 
 /* ----------------- Discussion  ----------------- */
 
-.discussion-topic {
-    border: 2px double black;
-}
-
 /* .speech-bubble, .chat-right:before and .chat-left:before were taken from codingislove.com */
 .speech-bubble {
     border-radius: 15px;
@@ -159,7 +156,6 @@ header {
     border-left: 15px solid #00bfb6;
     border-right: 15px solid transparent;
     border-top: 15px solid #00bfb6;
-    border-bottom: 15px solid transparent;
     right: -16px;
     top: 0px;
 }
@@ -172,13 +168,31 @@ header {
     border-left: 15px solid transparent;
     border-right: 15px solid #00bfb6;
     border-top: 15px solid #00bfb6;
-    border-bottom: 15px solid transparent;
     left: -16px;
     top: 0px;
 }
 
-.post p {
+.post-options-button {
+    margin-right: 5px;
+}
+
+.post-text {
     font-size: 14px;
+    overflow-wrap: break-word;
+    padding-left: 5px;
+    padding-right: 10px;
+    width: 100%;
+}
+
+.edit-post-area {
+    font-size: 14px;
+    width: 100%;
+    padding-left: 5px;
+    padding-right: 10px;
+}
+
+.edit-post-button {
+    margin-bottom: 5px;
 }
 
 .post-profile-picture {
@@ -193,6 +207,10 @@ header {
     margin-right: 10px;
     padding: 0;
     border-radius: 50%;
+}
+
+.post .user-portrait {
+    padding: 0px;
 }
 
 .footer {
@@ -233,4 +251,10 @@ header {
     width: 40vw;
     transition: width 0.5s;
 }
+}
+
+@media screen and (min-width: 600px) {
+    .topic-author {
+        color: gray;
+    }
 }

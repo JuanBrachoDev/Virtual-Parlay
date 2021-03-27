@@ -4,32 +4,32 @@
         <!-- Login form -->
         <div class="row">
             <!-- New Topic form -->
-                <form method="POST" action="{{ url_for('insert_topic_in_database') }}">
-                    <div class="card-panel">
-                        <h3 class="center-align title">New Topic</h3>
-                        <div class="row">
-                            <!-- Title input -->
-                            <div class="col s12 center-align input-field">
-                                <input id="title" name="title" type="text" minlength="5" maxlength="40" class="validate"
-                                    required>
-                                <label for="title">Title</label>
-                            </div>
-                            <!-- Description textarea -->
-                            <div class="col s12 bottom input-field">
-                                <textarea id="description" name="description" type="text" minlength="5" max="200"
-                                    class="validate materialize-textarea" required></textarea>
-                                <label for="description">Description</label>
-                            </div>
+            <form method="POST" action="{{ url_for('insert_topic_in_database') }}">
+                <div class="card-panel col s12 offset-m2 m8 offset-xl3 xl6">
+                    <h3 class="center-align">New Topic</h3>
+                    <div class="row">
+                        <!-- Title input -->
+                        <div class="col offset-s1 s10 center-align input-field">
+                            <input id="title" name="title" type="text" minlength="5" maxlength="40" class="validate"
+                                required>
+                            <label for="title">Title</label>
+                        </div>
+                        <!-- Description textarea -->
+                        <div class="col offset-s1 s10 bottom input-field">
+                            <textarea id="description" name="description" type="text" minlength="5" max="200"
+                                class="validate materialize-textarea" required></textarea>
+                            <label for="description">Description</label>
                         </div>
                     </div>
                     <!-- Submit and Cancel buttons -->
                     <div class="row">
-                        <div class="center-align">
+                        <div class="col s12 center-align">
                             <a class="btn" href="{{ url_for('index') }}">Cancel</a>
                             <button class="btn" type="submit">Confirm</button>
                         </div>
                     </div>
-                </form>
+                </div>
+            </form>
         </div>
     </div>
 {% endblock %}

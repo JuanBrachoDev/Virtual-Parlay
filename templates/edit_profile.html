@@ -3,7 +3,7 @@
     <div class="container">
         <!-- Edit Profile form -->
         <div class="row">
-            <form class="card-panel col s12 offset-m2 m8 offset-xl3 xl6" method="POST" action="{{ url_for('update_user_details', user=user, user_id=user._id) }}" enctype="multipart/form-data">
+            <form class="card-panel col s12 offset-m2 m8 offset-xl3 xl6" method="POST" action="{{ url_for('update_user_details', user_id=user._id) }}" enctype="multipart/form-data">
                 <div class="">
                     <h3 class="center-align">User's Profile</h3>
                     <div class="row">
