@@ -9,7 +9,7 @@
                 <div class="row">
                     <p class="col s12 center-align">{{ topic_info.description }}</p>
                 </div>
-                {% if topic_info.author == session['user_id'] %}
+                {% if topic_info.author == session['user_id'] or session['rank'] == 'admin' %}
                     <!-- Edit/Delete buttons -->
                     <div class="row center-align">
                         <button class="btn" onclick="showTopicEdit()" type="button">Edit</button>
@@ -45,7 +45,7 @@
         <!-- Posts -->
         <div class="row posts-section">
             {% for post in posts %}
-                {% if post.author == session['user_id'] %}
+                {% if post.author == session['user_id'] or session['rank'] == 'admin' %}
                     <!-- Own posts -->
                     <div class="row post own-post">
                         <div class="col s9 m10 l11 speech-bubble chat-right post valign-wrapper">

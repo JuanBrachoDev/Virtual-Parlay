@@ -22,7 +22,7 @@
                 <!-- Edit Profile button -->
                 <div class="row">
                     <div class="center-align">
-                        <a class="btn" href="{{ url_for('profile', user_id=session['user_id']) }}">Cancel</a>
+                        <a class="btn" href="{{ url_for('profile', user_id=user._id) }}">Cancel</a>
                         <button class="btn" type="submit">Confirm</button>
                     </div>
                 </div>

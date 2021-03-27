@@ -16,9 +16,9 @@
                     </ul>
                 </div>
                 <!-- Edit Profile button -->
-                {% if user._id|string() == session['user_id'] %}
+                {% if user._id|string() == session['user_id'] or session['rank'] == 'admin' %}
                     <div class="center-align row">
-                        <a class="btn" href="{{ url_for('edit_profile', user_id=session['user_id']) }}">Edit Profile</a>
+                        <a class="btn" href="{{ url_for('edit_profile', user_id=user._id) }}">Edit Profile</a>
                     </div>
                 {% endif %}
             </div>

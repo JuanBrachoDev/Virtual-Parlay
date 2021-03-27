@@ -187,9 +187,9 @@ def remove_post(post):
 
 
 # Saves image in upload folder and grabs filename to save in db
-def save_profile_image():
+def save_profile_image(user_id):
     profile_image = request.files['profile_picture']
-    filename = session['user_id']
+    filename = user_id
     profile_image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
 
@@ -209,10 +209,11 @@ def update_user_document(user):
 # message confirming update
 def update_user(user):
     if check_owner_or_admin(user['_id']):
-        save_profile_image()
+        save_profile_image(str(user['_id']))
         submit = update_user_document(user)
         mongo.db.users.update({"_id": ObjectId(user['_id'])}, submit)
-        session['display_name'] = submit['display_name']
+        if not session['rank'] == 'admin':
+            session['display_name'] = submit['display_name']
         flash("Profile Successfully Updated")
 
 
@@ -412,7 +413,8 @@ def edit_profile(user_id):
 
     # Allows user to edit own profile only if logged in, otherwise
     # redirect to main page
-    if user_id == session['user_id']:
+    check_owner_or_admin(user_id)
+    if check_owner_or_admin(user_id):
         return render_template("edit_profile.html", user=user)
 
     return redirect(url_for("index"))
