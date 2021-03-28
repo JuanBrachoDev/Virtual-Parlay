@@ -50,7 +50,8 @@ function hidePostEdit(button){
 }
 
 // Expands search field
-function showSearchField(searchField){   
+function showSearchField(searchField){
+    $(searchField).removeClass("search-load");
     $(searchField).removeClass("search-hidden");
     $(searchField).addClass("search-shown");
 }
