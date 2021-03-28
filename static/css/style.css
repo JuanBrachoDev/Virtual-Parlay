@@ -140,6 +140,15 @@ header {
     color: grey;
 }
 
+.topic-not-found-section {
+    margin-top: 50px;
+}
+
+.return-button {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
 /* ----------------- Discussion ----------------- */
 
 /* .speech-bubble, .chat-right:before and .chat-left:before were taken from codingislove.com */
