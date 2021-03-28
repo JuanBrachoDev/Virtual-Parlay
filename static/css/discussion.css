@@ -1,0 +1,85 @@
+/* ----------------- Discussion ----------------- */
+
+/* .speech-bubble, .chat-right:before and .chat-left:before were taken from codingislove.com */
+.speech-bubble {
+    border-radius: 15px;
+    background: #00bfb6;
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+    position: relative;
+}
+
+.chat-right:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 15px solid #00bfb6;
+    border-right: 15px solid transparent;
+    border-top: 15px solid #00bfb6;
+    right: -16px;
+    top: 0px;
+}
+
+.chat-left:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 15px solid transparent;
+    border-right: 15px solid #00bfb6;
+    border-top: 15px solid #00bfb6;
+    left: -16px;
+    top: 0px;
+}
+
+.post-options-button {
+    margin-right: 5px;
+}
+
+.post-text {
+    font-size: 14px;
+    overflow-wrap: break-word;
+    padding-left: 5px;
+    padding-right: 10px;
+    width: 100%;
+}
+
+.edit-post-area {
+    font-size: 14px;
+    width: 100%;
+    padding-left: 5px;
+    padding-right: 10px;
+}
+
+.edit-post-button {
+    margin-bottom: 5px;
+}
+
+.post-profile-picture {
+    width: 49px;
+    height: 49px;
+    border-radius: 50%;
+}
+
+#discussion-send-button {
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+    padding: 0;
+    border-radius: 50%;
+}
+
+.post .user-portrait {
+    padding: 0px;
+}
+
+.footer {
+    background-color: whitesmoke;
+    position: sticky;
+    bottom: 0;
+    border-radius: 10px;
+    border: 2px outset gray;
+    padding-left: 20px;
+}

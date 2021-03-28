@@ -13,8 +13,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
         type="text/css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/waves.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}" type="text/css">
+    {% block styles %}
+    {% endblock %}
     <title>Virtual Parlay</title>
 </head>
 
@@ -103,7 +104,9 @@
         crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+    {% block scripts %}
+    {% endblock %}
 </body>
 
 </html>

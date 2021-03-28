@@ -1,0 +1,47 @@
+/* ----------------- Index ----------------- */
+
+.title {
+    margin-top: 0px;
+}
+
+.topics-list {
+    padding: 20px 10px 0px;
+    border: 2px outset gray;
+    border-radius: 5px;
+    background-color: whitesmoke;
+}
+
+.topic {
+    padding-top: 10px;
+    padding-bottom: 5px;
+    margin: 0px 10px 20px;
+    border: 2px outset gray;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.topic-title {
+    margin-bottom: 10px;
+    font-size: large;
+}
+
+.topic-description {
+    margin-bottom: 10px;
+}
+
+.topic-author {
+    margin-bottom: 10px;
+}
+
+.topic-info {
+    color: grey;
+}
+
+.topic-not-found-section {
+    margin-top: 50px;
+}
+
+.return-button {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}

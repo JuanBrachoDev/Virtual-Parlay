@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/discussion.css') }}" type="text/css">
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="row">
@@ -116,4 +121,8 @@
             </div>
         {% endif %}
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/discussion.js') }}"></script>
 {% endblock %}
