@@ -55,17 +55,16 @@
                     <div class="row post own-post">
                         <div class="col s9 m10 l11 speech-bubble chat-right post valign-wrapper">
                             <!-- Edit/Delete button -->
-                                <a class="dropdown-trigger post-options-button left" href="#" data-target="post-options_{{ post._id }}">
-                                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                                </a>
-                                <!-- Edit/Delete dropdown -->
-                                <ul id="post-options_{{ post._id }}" class="dropdown-content">
-                                    <li><a data-post="{{ post._id }}" onclick="showPostEdit(this)"
-                                            type="button">Edit</a></li>
-                                    <li><a href="{{ url_for('delete_post', post=post._id) }}">Delete</a></li>
-                                </ul>
+                            <a class="dropdown-trigger post-options-button left" href="#" data-target="post-options_{{ post._id }}">
+                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                            </a>
+                            <!-- Edit/Delete dropdown -->
+                            <ul id="post-options_{{ post._id }}" class="dropdown-content">
+                                <li><a data-post="{{ post._id }}" onclick="showPostEdit(this)" type="button">Edit</a></li>
+                                <li><a href="{{ url_for('delete_post', post=post._id) }}">Delete</a></li>
+                            </ul>
                             <!-- Post Edit form -->
-                            <div id="edit_post_area_{{ post._id }}" class="hide edit-post-area">      
+                            <div id="edit_post_area_{{ post._id }}" class="hide edit-post-area">
                                 <form method="POST" action="{{ url_for('edit_post', post=post._id) }}">
                                     <!-- Post text -->
                                     <textarea id="post_edit_{{ post._id }}" name="post_edit_{{ post._id }}" type="text"
@@ -81,11 +80,12 @@
                             </div>
                             <!-- Post text -->
                             <p id="post_text_{{ post._id }}" class="post-text">{{ post.post }}</p>
-                        </div>        
+                        </div>
                         <!-- Profile picture -->
                         <div class="col s1 user-portrait right">
                             <a href="{{ url_for('profile', user_id=post.author) }}">
-                                <img class="post-profile-picture right" src="{{ url_for('send_file', filename=post.author) }}" alt="Profile Picture">
+                                <img class="post-profile-picture right" src="{{ url_for('send_file', filename=post.author) }}"
+                                    alt="Profile Picture">
                             </a>
                         </div>
                     </div>
@@ -95,7 +95,8 @@
                         <!-- Profile picture -->
                         <div class="col s1 user-portrait">
                             <a href="{{ url_for('profile', user_id=post.author) }}">
-                                <img class="post-profile-picture" src="{{ url_for('send_file', filename=post.author) }}" alt="Profile Picture">
+                                <img class="post-profile-picture" src="{{ url_for('send_file', filename=post.author) }}"
+                                    alt="Profile Picture">
                             </a>
                         </div>
                         <!-- Post Text -->
@@ -108,14 +109,15 @@
         </div>
         <!-- New Post form -->
         {% if session.user_id %}
-            <div class="row footer">        
+            <div class="row footer">
                 <form method="POST" action="{{ url_for('create_post', topic=topic_info._id) }}">
                     <div class="col s9 m10 l11 input-field">
                         <textarea id="post" name="post" type="text" class="materialize-textarea" required></textarea>
                         <label for="post"></label>
                     </div>
                     <div class="input-field valign-wrapper">
-                        <button id="discussion-send-button" class="btn" type="submit"><i class="fa fa-comment center-align" aria-hidden="true"></i></button>
+                        <button id="discussion-send-button" class="btn" type="submit"><i class="fa fa-comment center-align"
+                                aria-hidden="true"></i></button>
                     </div>
                 </form>
             </div>

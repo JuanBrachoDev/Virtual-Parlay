@@ -8,21 +8,24 @@
     <div class="container">
         <!-- Edit Profile form -->
         <div class="row">
-            <form class="card-panel col s12 offset-m2 m8 offset-xl3 xl6" method="POST" action="{{ url_for('update_user_details', user_id=user._id) }}" enctype="multipart/form-data">
+            <form class="card-panel col s12 offset-m2 m8 offset-xl3 xl6" method="POST"
+                action="{{ url_for('update_user_details', user_id=user._id) }}" enctype="multipart/form-data">
                 <div class="">
                     <h3 class="center-align">Edit Profile</h3>
                     <div class="row">
                         <!-- Display Name -->
                         <div class="col offset-s1 s10 center-align input-field">
-                            <input id="display_name" name="display_name" type="text" minlength="5" maxlength="15" pattern="^[a-zA-Z0-9 _-]{5,15}$" value="{{ user.display_name }}" class="validate" required>
+                            <input id="display_name" name="display_name" type="text" minlength="5" maxlength="15"
+                                pattern="^[a-zA-Z0-9 _-]{5,15}$" value="{{ user.display_name }}" class="validate" required>
                             <label for="display_name">Display Name</label>
                         </div>
                         <!-- Profile Picture -->
                         <div class="col offset-s1 s10 bottom input-field">
-                            <input id="profile_picture" name="profile_picture" type="file" size="50000000" accept="image/png, image/jpeg" required>
+                            <input id="profile_picture" name="profile_picture" type="file" size="50000000"
+                                accept="image/png, image/jpeg" required>
                             <label class="active" for="profile_picture">Profile Picture</label>
                         </div>
-                    </div> 
+                    </div>
                 </div>
                 <!-- Edit Profile button -->
                 <div class="row">

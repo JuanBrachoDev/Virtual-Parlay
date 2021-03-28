@@ -12,10 +12,13 @@
             {% if topics %}
                 {% for topic in topics %}
                     <div class="row topic">
-                        <a class="col center-align s12 truncate topic-title" href="{{ url_for('discussion', topic=topic._id) }}"><u>{{ topic.title }}</u></a>
+                        <a class="col center-align s12 truncate topic-title"
+                            href="{{ url_for('discussion', topic=topic._id) }}"><u>{{ topic.title }}</u></a>
                         <span class="col s12 center-align topic-description"><i>{{ topic.description }}</i></span>
-                        <a class="col s12 m3 center-align truncate topic-author" href="{{ url_for('profile', user_id=topic.author) }}">By: <u>{{ topic.author_name }}</u></a>
-                        <span class="col s3 m3 center-align topic-info"><i class="fa fa-comments" aria-hidden="true"></i>{{ topic.posts }}</span>
+                        <a class="col s12 m3 center-align truncate topic-author"
+                            href="{{ url_for('profile', user_id=topic.author) }}">By: <u>{{ topic.author_name }}</u></a>
+                        <span class="col s3 m3 center-align topic-info"><i class="fa fa-comments"
+                                aria-hidden="true"></i>{{ topic.posts }}</span>
                         <span class="col s9 m6 center-align truncate topic-info">{{ topic.date.strftime("%H:%M, %d/%m/%y") }}</span>
                     </div>
                 {% endfor %}
