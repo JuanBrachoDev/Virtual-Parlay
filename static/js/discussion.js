@@ -2,16 +2,6 @@ $(document).ready(function(){
     $('.dropdown-trigger').dropdown();
 });
 
-// Adds taphold events to posts
-$(function(){
-  $( ".post" ).bind( "taphold", tapholdHandler);
- 
-  function tapholdHandler( event ){
-    $( ".post-options-button" ).click();
-  }
-});
-
-
 // Hides topic's area and shows edit form
 function showTopicEdit(){   
     $('#edit_topic_area').removeClass("hide");
