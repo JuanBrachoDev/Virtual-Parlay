@@ -34,7 +34,7 @@
                 </div>
                 <!-- Description -->
                 <div class="col s12 input-field">
-                    <textarea id="topic_description" name="topic_description" type="text" minlength="5" max="200"
+                    <textarea id="topic_description" name="topic_description" minlength="5" max="200"
                         class="validate materialize-textarea" required>{{ topic_info.description }}</textarea>
                     <label for="topic_description">Description</label>
                 </div>
@@ -112,7 +112,7 @@
             <div class="row footer">
                 <form method="POST" action="{{ url_for('create_post', topic=topic_info._id) }}">
                     <div class="col s9 m10 l11 input-field">
-                        <textarea id="post" name="post" type="text" class="materialize-textarea" required></textarea>
+                        <textarea id="post" name="post" class="materialize-textarea" required></textarea>
                         <label for="post"></label>
                     </div>
                     <div class="input-field valign-wrapper">
