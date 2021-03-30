@@ -1,4 +1,4 @@
-Go back to original [document](https://github.com/JuanBrachoDev/Virtual-Parlay/tree/master/readme.md).
+Go back to original [document](https://github.com/JuanBrachoDev/Virtual-Parlay/tree/master/README.md).
 
 ### Validation
 
