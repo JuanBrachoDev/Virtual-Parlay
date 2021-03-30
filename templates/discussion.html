@@ -18,7 +18,7 @@
                     <!-- Edit/Delete buttons -->
                     <div class="row center-align">
                         <button class="btn" onclick="showTopicEdit()" type="button">Edit</button>
-                        <a class="btn" href="{{ url_for('delete_topic', topic=topic_info._id) }}">Delete</a>
+                        <button data-target="delete-topic-modal" class="btn modal-trigger">Delete</button>
                     </div>
                 {% endif %}
             </div>
@@ -46,6 +46,17 @@
                     </div>
                 </div>
             </form>
+        </div>
+        <!-- Delete Topic Modal -->
+        <div id="delete-topic-modal" class="modal">
+            <div class="modal-content">
+                <h5>Do you wish to delete this topic?</h5>
+                <p>This is irreversible</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn modal-close">Cancel</button>
+                <a class="btn modal-close" href="{{ url_for('delete_topic', topic=topic_info._id) }}">Confirm</a>
+            </div>
         </div>
         <!-- Posts -->
         <div class="row posts-section">

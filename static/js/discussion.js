@@ -1,5 +1,6 @@
 $(document).ready(function(){
     $('.dropdown-trigger').dropdown();
+    $('.modal').modal();
 });
 
 // Hides topic's area and shows edit form

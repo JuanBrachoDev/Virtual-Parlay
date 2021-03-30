@@ -31,7 +31,7 @@
         -   ![01173f](https://via.placeholder.com/15/01173f/01173f?Text=-) **#01173f:** For the background gradient.
         -   ![395461](https://via.placeholder.com/15/395461/395461?Text=-) **#395461:** For the navbar 
         -   ![F9D9A9](https://via.placeholder.com/15/f8f8ff/f8f8ff?Text=-) **#f8f8ff:** For most of the card panels.
-        -   ![00bfb6](https://via.placeholder.com/15/00bfb6/00bfb6?Text=-) **#00bfb6:** For posts speech bubbles.
+        -   ![449FAF](https://via.placeholder.com/15/449FAF/449FAF?Text=-) **#449FAF:** For posts speech bubbles.
         -   ![121111](https://via.placeholder.com/15/121111/121111?Text=-) **Dark Wood:** For most of the buttons. 
 
         The following colour palette was chosen as the inspiration for the base colours picked:
@@ -41,6 +41,11 @@
     -   Two main fonts were chosen for this page: 
         -   **"Berkshire Swash"** for the logo's text and titles throughout the project with **"cursive"** as fallback, giving the page a stylish and regal feel, imitating royal decrees in pirate's times.
         -   **"Merienda"** for the rest of the text, with **"cursive"** as fallback, granting an ink pen look that isn't tiring to read.
+
+    ### Imagery
+    -   **Logo**: A skull with swords was chosen as the logo to represent a Jolly Roger characteristic of pirate ships.
+    -   **Waves**: Animated waves in the background of all pages were added to present a dynamic element that would add depth to the pirate theme, yet remain soothing enough to not disrupt page navigation and functionality.
+    -   **Default Profile Image**: A pirate captain was chosen to introduce users as pirates to the community, leaving the theme as the first impression.
 
 *   ### Wireframes
 
@@ -95,6 +100,9 @@ Three different collections were used throughout this project, the database serv
 
 -   ### TapHold Event for Mobiles
     Replace the menu button for editing and deleting posts with a tap hold event that triggers the menu for small devices.
+
+-   ### Post count removal on topic deletion.
+    Post count for users is only subtracted from deleted posts, a function will be created so upon topic deletion it scans all posts associated, deletes those posts and adjusts posts count for all users involved.
 
 ## Technologies Used
 

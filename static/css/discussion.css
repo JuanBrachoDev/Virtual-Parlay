@@ -3,7 +3,7 @@
 /* .speech-bubble, .chat-right:before and .chat-left:before were taken from codingislove.com */
 .speech-bubble {
     border-radius: 15px;
-    background: #00bfb6;
+    background: #449FAF;
     color: #fff;
     text-align: center;
     font-weight: 600;
@@ -15,9 +15,9 @@
     width: 0px;
     height: 0px;
     position: absolute;
-    border-left: 15px solid #00bfb6;
+    border-left: 15px solid #449FAF;
     border-right: 15px solid transparent;
-    border-top: 15px solid #00bfb6;
+    border-top: 15px solid #449FAF;
     right: -16px;
     top: 0px;
 }
@@ -28,14 +28,15 @@
     height: 0px;
     position: absolute;
     border-left: 15px solid transparent;
-    border-right: 15px solid #00bfb6;
-    border-top: 15px solid #00bfb6;
+    border-right: 15px solid #449FAF;
+    border-top: 15px solid #449FAF;
     left: -16px;
     top: 0px;
 }
 
 .post-options-button {
     margin-right: 5px;
+    color: #fff;
 }
 
 .post-text {
