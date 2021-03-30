@@ -27,12 +27,12 @@
 -   ### Design
     -   #### Colour Scheme
         The main colours used throughout the page are: 
-        -   ![B1F4FC](https://via.placeholder.com/15/B1F4FC/B1F4FC?Text=-) **#B1F4FC:** For the background gradient.
-        -   ![01173f](https://via.placeholder.com/15/01173f/01173f?Text=-) **#01173f:** For the background gradient.
-        -   ![395461](https://via.placeholder.com/15/395461/395461?Text=-) **#395461:** For the navbar 
-        -   ![F9D9A9](https://via.placeholder.com/15/f8f8ff/f8f8ff?Text=-) **#f8f8ff:** For most of the card panels.
-        -   ![449FAF](https://via.placeholder.com/15/449FAF/449FAF?Text=-) **#449FAF:** For posts speech bubbles.
-        -   ![121111](https://via.placeholder.com/15/121111/121111?Text=-) **Dark Wood:** For most of the buttons. 
+        -   **#B1F4FC:** For the background gradient.
+        -   **#01173f:** For the background gradient.
+        -   **#395461:** For the navbar 
+        -   **#f8f8ff:** For most of the card panels.
+        -   **#449FAF:** For posts speech bubbles.
+        -   **Dark Wood:** For most of the buttons. 
 
         The following colour palette was chosen as the inspiration for the base colours picked:
         ![Colour Scheme](docs/readme/colour_scheme.png)
@@ -200,7 +200,6 @@ The project was deployed to [Heroku](https://www.heroku.com/home) by automatical
 
 ### Media
 
--   Squares with colour hexcode for README: Courtesy of [Placeholder.com](https://placeholder.com/). 
 -   Dark Wood Image: “Dark Wood” (c) by Omar Alvarado is licensed under (CC BY-SA 3.0), content found in [Toptal.com](https://www.toptal.com/designers/subtlepatterns/dark-wood/).
 -   Default Image, Logo Image: “56 Pirate icons” (c) by Game-Icons.net is licensed under (CC BY 3.0), content found in [Game-icons.net](https://game-icons.net/tags/pirate.html).
 
