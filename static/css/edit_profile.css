@@ -3,3 +3,7 @@
 #profile_picture {
     margin-top: 15px;
 }
+
+#helper_profile_picture {
+    color: red;
+}

@@ -21,9 +21,11 @@
                         </div>
                         <!-- Profile Picture -->
                         <div class="col offset-s1 s10 bottom input-field">
-                            <input id="profile_picture" name="profile_picture" type="file" size="50000000"
-                                accept="image/png, image/jpeg" required>
+                            <input id="profile_picture" name="profile_picture" type="file" accept="image/*" class="validate"
+                                required>
                             <label class="active" for="profile_picture">Profile Picture</label>
+                            <span id="helper_profile_picture" class="helper-text hide">
+                                File is too big, choose a picture under 5MB.</span>
                         </div>
                     </div>
                 </div>
@@ -37,4 +39,8 @@
             </form>
         </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/edit_profile.js') }}"></script>
 {% endblock %}
