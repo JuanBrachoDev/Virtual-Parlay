@@ -1,6 +1,8 @@
 $(document).ready(function(){
     $('.dropdown-trigger').dropdown();
     $('.modal').modal();
+    // Scrolls down to bottom of discussion once DOM is safe to manipulate
+    window.scrollTo(0,document.body.scrollHeight);
 });
 
 // Hides topic's area and shows edit form

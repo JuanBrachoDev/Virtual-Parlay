@@ -8,7 +8,7 @@
 
 -   ### User stories
 
-    -   #### As an user I need to:
+    -   #### As a user I need to:
 
         - Be able to register, log in and log out.
         - Be able to open a new topic so I can discuss a game with other users.
@@ -40,11 +40,11 @@
 -   ### Typography
     -   Two main fonts were chosen for this page: 
         -   **"Berkshire Swash"** for the logo's text and titles throughout the project with **"cursive"** as fallback, giving the page a stylish and regal feel, imitating royal decrees in pirate's times.
-        -   **"Merienda"** for the rest of the text, with **"cursive"** as fallback, granting an ink pen look that isn't tiring to read.
+        -   **"Merienda"** for the rest of the text, with **"cursive"** as fallback, granting an ink pen look that is not tiring to read.
 
     ### Imagery
     -   **Logo**: A skull with swords was chosen as the logo to represent a Jolly Roger characteristic of pirate ships.
-    -   **Waves**: Animated waves in the background of all pages were added to present a dynamic element that would add depth to the pirate theme, yet remain soothing enough to not disrupt page navigation and functionality.
+    -   **Waves**: Animated waves in the background of all pages were added to present a dynamic element that would add depth to the pirate theme yet remain soothing enough to not disrupt page navigation and functionality.
     -   **Default Profile Image**: A pirate captain was chosen to introduce users as pirates to the community, leaving the theme as the first impression.
 
 *   ### Wireframes
@@ -57,7 +57,7 @@
 
 ---
 
-Three different collections were used throughout this project, the database service used was MongoDB Atlas, which is  document-based (NoSQL).
+Three different collections were used throughout this project, the database service used was MongoDB Atlas, which is document-based (NoSQL).
 
 -   ### General Schema:
    ![General Schema](docs/readme/schema/general_schema.png)
@@ -87,7 +87,7 @@ Three different collections were used throughout this project, the database serv
 -   ### Profile
        Provides users with a personal, customizable space for their accounts.
 -   ### Register
-       Enables users to create an account so they are able to log in, create topics and participate in discussions.
+       Enables users to create an account so they can log in, create topics and participate in discussions.
 -   ### Log In / Log Out
        Allows users to sign in and out of their accounts.
 
@@ -207,3 +207,5 @@ The project was deployed to [Heroku](https://www.heroku.com/home) by automatical
 
 -   My Mentor Narender for continuous helpful feedback.
 -   Code Institute's tutor support for their helpful input.
+
+
