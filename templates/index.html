@@ -14,7 +14,7 @@
                     <div class="row topic">
                         <a class="col center-align s12 truncate topic-title"
                             href="{{ url_for('discussion', topic=topic._id) }}"><u>{{ topic.title }}</u></a>
-                        <span class="col s12 center-align topic-description"><i>{{ topic.description }}</i></span>
+                        <span class="col s12 center-align topic-description">{{ topic.description }}</span>
                         <a class="col s12 m3 center-align truncate topic-author"
                             href="{{ url_for('profile', user_id=topic.author) }}">By: <u>{{ topic.author_name }}</u></a>
                         <span class="col s3 m3 center-align topic-info"><i class="fa fa-comments"

@@ -42,10 +42,10 @@
         -   **"Berkshire Swash"** for the logo's text and titles throughout the project with **"cursive"** as fallback, giving the page a stylish and regal feel, imitating royal decrees in pirate's times.
         -   **"Merienda"** for the rest of the text, with **"cursive"** as fallback, granting an ink pen look that is not tiring to read.
 
-    ### Imagery
-    -   **Logo**: A skull with swords was chosen as the logo to represent a Jolly Roger characteristic of pirate ships.
-    -   **Waves**: Animated waves in the background of all pages were added to present a dynamic element that would add depth to the pirate theme yet remain soothing enough to not disrupt page navigation and functionality.
-    -   **Default Profile Image**: A pirate captain was chosen to introduce users as pirates to the community, leaving the theme as the first impression.
+-    ### Imagery
+        -   **Logo**: A skull with swords was chosen as the logo to represent a Jolly Roger characteristic of pirate ships.
+        -   **Waves**: Animated waves in the background of all pages were added to present a dynamic element that would add depth to the pirate theme yet remain soothing enough to not disrupt page navigation and functionality.
+        -   **Default Profile Image**: A pirate captain was chosen to introduce users as pirates to the community, leaving the theme as the first impression.
 
 *   ### Wireframes
 
@@ -161,7 +161,7 @@ You can access the testing document by clicking [Here](https://github.com/JuanBr
 
 The project was deployed to [Heroku](https://www.heroku.com/home) by automatically deploying from [GitHub](https://github.com/) using the following steps:
 
-> This guide assumes you already have a [GitHub](https://github.com/) repo that contains an ``env.py`` file that stores your environment's custom settings.
+> This guide assumes you already have a [GitHub](https://github.com/) repo that contains an ``env.py`` file which stores your environment's custom settings.
 
 1. Set up the ``requirements.txt`` and ``Procfile`` by using the following commands in the terminal:
 
